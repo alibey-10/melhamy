@@ -14,11 +14,5 @@
   "intent": true,
   "version": 1,
   "framework": "react",
-  "chosenAddOns": [
-    "cloudflare",
-    "ai",
-    "compiler",
-    "shadcn",
-    "store"
-  ]
+  "chosenAddOns": ["cloudflare", "ai", "compiler", "shadcn", "store"]
 }
