@@ -17,8 +17,27 @@ const config = defineConfig({
     semi: false,
   },
   lint: {
-    jsPlugins: [{ name: 'vite-plus', specifier: 'vite-plus/oxlint-plugin' }],
-    rules: { 'vite-plus/prefer-vite-plus-imports': 'error' },
+    jsPlugins: [{ name: 'vite-plus', specifier: 'vite-plus/oxlint-plugin' }, '@shadcn/lint'],
+    rules: {
+      'vite-plus/prefer-vite-plus-imports': 'error',
+      'shadcn/no-restyle': [
+        'warn',
+        {
+          allow: ['layout'],
+          deny: ['[--*', '[background-image*', '[mask*', '[-webkit-mask*'],
+        },
+      ],
+      'shadcn/no-raw-colors': 'error',
+      'shadcn/no-unknown-classes': 'error',
+    },
+    overrides: [
+      {
+        files: ['**/components/ui/**', '**/components/blocks/**'],
+        rules: {
+          'shadcn/no-restyle': 'off',
+        },
+      },
+    ],
     options: { typeAware: true, typeCheck: true },
   },
   resolve: { tsconfigPaths: true },
