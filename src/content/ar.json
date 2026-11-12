@@ -6,7 +6,8 @@
   "header": {
     "openMenu": "فتح القائمة",
     "closeMenu": "إغلاق القائمة",
-    "mainNavLabel": "التنقل الرئيسي"
+    "mainNavLabel": "التنقل الرئيسي",
+    "toggleTheme": "تبديل المظهر"
   },
   "nav": {
     "books": "الكتب",

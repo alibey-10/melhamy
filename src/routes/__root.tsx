@@ -8,6 +8,8 @@ import { content } from '@/content'
 
 import appCss from '../styles.css?url'
 
+const themeScript = `try{var t=localStorage.getItem('theme');if(t==='dark'||(!t&&matchMedia('(prefers-color-scheme: dark)').matches))document.documentElement.classList.add('dark')}catch(e){}`
+
 export const Route = createRootRoute({
   head: () => ({
     meta: [
@@ -34,8 +36,9 @@ export const Route = createRootRoute({
 
 function RootDocument({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="ar" dir="rtl" className="scroll-smooth antialiased">
+    <html lang="ar" dir="rtl" className="scroll-smooth antialiased" suppressHydrationWarning>
       <head>
+        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
         <HeadContent />
       </head>
       <body className="flex min-h-svh flex-col">
