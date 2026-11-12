@@ -11,10 +11,5 @@ export const Route = createFileRoute('/blog')({
 })
 
 function BlogPage() {
-  return (
-    <div className="flex flex-1 flex-col">
-      <div className="flex-1" />
-      <AuthorNote />
-    </div>
-  )
+  return <AuthorNote />
 }

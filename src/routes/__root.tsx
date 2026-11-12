@@ -40,7 +40,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
       </head>
       <body className="flex min-h-svh flex-col">
         <SiteHeader />
-        <main className="flex flex-1 flex-col">{children}</main>
+        <main className="flex-1">{children}</main>
         <SiteFooter />
         <TanStackDevtools
           config={{
