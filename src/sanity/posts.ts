@@ -1,6 +1,7 @@
 import { createServerFn } from '@tanstack/react-start'
 
 import { sanityClient } from './client'
+import { toWords } from './search'
 
 /** Articles shown on each page of the blog list. */
 export const POSTS_PER_PAGE = 12
@@ -45,11 +46,15 @@ export type Post = PostSummary & {
   image?: BodyImage
 }
 
+// With search terms, only articles matching every word (each as a prefix).
+const LIST_FILTER = `_type == "post" && defined(slug.current)
+  && (!defined($terms) || [title, excerpt, categories, pt::text(body)] match $terms)`
+
 const POSTS_QUERY = `{
-  "posts": *[_type == "post" && defined(slug.current)] | order(publishedAt desc) [$start...$end] {
+  "posts": *[${LIST_FILTER}] | order(publishedAt desc) [$start...$end] {
     _id, title, "slug": slug.current, publishedAt, excerpt, categories
   },
-  "total": count(*[_type == "post" && defined(slug.current)])
+  "total": count(*[${LIST_FILTER}])
 }`
 
 const POST_QUERY = `*[_type == "post" && slug.current == $slug][0] {
@@ -68,15 +73,30 @@ const SITEMAP_QUERY = `{
 
 const SOURCE_QUERY = `*[_type == "post" && sourceUrl == $url][0].slug.current`
 
-/** One page (1-based) of articles, newest first, with the total count. Runs on the server. */
+export type PostsInput = {
+  /** 1-based page number. */
+  page: number
+  /** Only articles matching these words; omit for all of them. */
+  query?: string
+}
+
+/**
+ * One page of articles, newest first, with the total count, optionally only
+ * those matching a search. Runs on the server.
+ */
 export const getPosts = createServerFn({ method: 'GET' })
-  .validator((page: number) => page)
-  .handler(({ data: page }) =>
-    sanityClient.fetch<{ posts: PostSummary[]; total: number }>(POSTS_QUERY, {
+  .validator((input: PostsInput) => ({
+    page: Math.max(1, Math.floor(Number(input.page) || 1)),
+    query: typeof input.query === 'string' ? input.query : '',
+  }))
+  .handler(({ data: { page, query } }) => {
+    const words = toWords(query)
+    return sanityClient.fetch<{ posts: PostSummary[]; total: number }>(POSTS_QUERY, {
+      terms: words.length ? words.map((word) => `${word}*`) : null,
       start: (page - 1) * POSTS_PER_PAGE,
       end: page * POSTS_PER_PAGE,
-    }),
-  )
+    })
+  })
 
 /** One article by slug, or `null` if there is none. Runs on the server. */
 export const getPost = createServerFn({ method: 'GET' })

@@ -16,7 +16,7 @@ const LATEST_POSTS = 6
 
 export const Route = createFileRoute('/')({
   loader: async () => {
-    const [{ posts }, books] = await Promise.all([getPosts({ data: 1 }), getBooks()])
+    const [{ posts }, books] = await Promise.all([getPosts({ data: { page: 1 } }), getBooks()])
     return { posts: posts.slice(0, LATEST_POSTS), books }
   },
   head: () =>
