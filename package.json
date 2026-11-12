@@ -12,6 +12,7 @@
     "preview": "vp preview",
     "deploy": "bun run build && wrangler deploy",
     "deploy:preview": "bun run build && wrangler versions upload",
+    "postinstall": "node scripts/workers-ci-build.mjs",
     "prepare": "vp config"
   },
   "dependencies": {
