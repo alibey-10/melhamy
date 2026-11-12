@@ -1,5 +1,5 @@
 import { HugeiconsIcon, type IconSvgElement } from '@hugeicons/react'
-import { NewTwitterIcon, TelegramIcon, YoutubeIcon } from '@hugeicons/core-free-icons'
+import { NewTwitterIcon, GithubIcon, TelegramIcon, YoutubeIcon } from '@hugeicons/core-free-icons'
 
 import { NAV_ORDER, NAV_URLS, SOCIAL_ORDER, SOCIAL_URLS, type SocialKey } from '@/constants/urls'
 import { content } from '@/content'
@@ -8,6 +8,7 @@ const SOCIAL_ICONS: Record<SocialKey, IconSvgElement> = {
   youtube: YoutubeIcon,
   telegram: TelegramIcon,
   x: NewTwitterIcon,
+  sourceCode: GithubIcon,
 }
 
 export function SiteFooter() {
