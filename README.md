@@ -23,6 +23,15 @@
 - جميع الروابط (الصفحات وحسابات التواصل) موجودة في `src/constants/urls.ts`.
 - الكتب والمقالات تُدار من [Sanity](https://www.sanity.io) عبر لوحة التحرير على الرابط `/studio`.
 - إعدادات الاتصال بـ Sanity في `src/sanity/env.ts`، وأنواع المحتوى في `src/sanity/schema`.
+- لنقل أحدث المقالات من المدونة القديمة على Blogger إلى Sanity (المقالات المنقولة سابقًا لا تُكرَّر ولا تُستبدل إلا مع `--replace`):
+
+</div>
+
+```bash
+bunx sanity exec scripts/import-blogger.ts --with-user-token -- --limit 20
+```
+
+<div dir="rtl">
 
 ## التشغيل محليًا
 
