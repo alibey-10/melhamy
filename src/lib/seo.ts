@@ -18,11 +18,14 @@ export function clip(text: string, max = 160) {
 
 export type SeoImage = { url: string; width?: number; height?: number; alt?: string }
 
-/** The author's portrait, for pages without an image of their own. */
+/** The author's portrait, for structured data that describes the person. */
+const PORTRAIT_URL = absoluteUrl('/author.webp')
+
+/** The site's social card, for pages without an image of their own. */
 export const DEFAULT_IMAGE: SeoImage = {
-  url: absoluteUrl('/author.webp'),
-  width: 256,
-  height: 256,
+  url: absoluteUrl('/og.png'),
+  width: 1200,
+  height: 630,
   alt: content.site.name,
 }
 
@@ -72,6 +75,10 @@ export function seo({
     ...(publishedTime ? [{ property: 'article:published_time', content: publishedTime }] : []),
     { name: 'twitter:card', content: large ? 'summary_large_image' : 'summary' },
     { name: 'twitter:site', content: X_HANDLE },
+    { name: 'twitter:title', content: title ?? content.site.name },
+    { name: 'twitter:description', content: desc },
+    { name: 'twitter:image', content: image.url },
+    ...(image.alt ? [{ name: 'twitter:image:alt', content: image.alt }] : []),
   ]
 
   const scripts: JSX.IntrinsicElements['script'][] = jsonLd.map((ld) => ({
@@ -94,7 +101,7 @@ export function personLd(): JsonLd {
     '@id': PERSON_ID,
     name: content.site.name,
     url: SITE_URL,
-    image: DEFAULT_IMAGE.url,
+    image: PORTRAIT_URL,
     description: content.about.intro,
     jobTitle: 'مؤرخ وباحث في التاريخ والحضارة الإسلامية',
     birthDate: '1983',
