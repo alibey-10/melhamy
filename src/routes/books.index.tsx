@@ -1,7 +1,6 @@
 import { Link, createFileRoute } from '@tanstack/react-router'
 
 import { BookCover } from '@/components/books/book-cover'
-import { AuthorNote } from '@/components/layout/author-note'
 import { content } from '@/content'
 import { getBooks } from '@/sanity/books'
 
@@ -16,12 +15,11 @@ export const Route = createFileRoute('/books/')({
 function BooksPage() {
   const books = Route.useLoaderData()
   return (
-    <div className="mx-auto max-w-3xl px-4 py-12">
-      <AuthorNote />
+    <div className="mx-auto max-w-6xl px-4 py-12">
       {books.length === 0 ? (
-        <p className="mt-12 text-muted-foreground">{content.books.empty}</p>
+        <p className="text-muted-foreground">{content.books.empty}</p>
       ) : (
-        <ul className="mt-12 grid grid-cols-2 gap-4 sm:grid-cols-3 sm:gap-6 md:grid-cols-4">
+        <ul className="grid grid-cols-2 gap-4 sm:grid-cols-3 sm:gap-6 md:grid-cols-4">
           {books.map((book) => (
             <li key={book._id}>
               <Link
