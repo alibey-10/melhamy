@@ -14,6 +14,7 @@ export const SOCIAL_URLS = {
   youtube: 'https://www.youtube.com/@melhamy',
   telegram: 'https://web.telegram.org/a/#-1001002613976',
   x: 'https://x.com/melhamy',
+  sourceCode: 'https://github.com/alibey-10/melhamy',
 } as const
 
 export type NavKey = keyof typeof NAV_URLS
@@ -23,4 +24,4 @@ export type SocialKey = keyof typeof SOCIAL_URLS
 export const NAV_ORDER: readonly NavKey[] = ['books', 'blog']
 
 /** Display order of the social links in the footer. */
-export const SOCIAL_ORDER: readonly SocialKey[] = ['youtube', 'telegram', 'x']
+export const SOCIAL_ORDER: readonly SocialKey[] = ['youtube', 'telegram', 'x', 'sourceCode']

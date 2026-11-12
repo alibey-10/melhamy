@@ -1,6 +1,29 @@
-# lite-starter
+<div dir="rtl">
 
-TanStack Start, Tailwind CSS, and shadcn/ui on Cloudflare Workers.
+# موقع محمد إلهامي
+
+الموقع الرسمي للمؤرخ والكاتب **محمد إلهامي**، يجمع كتبه ومقالاته في مكان واحد. الموقع باللغة العربية ويدعم الكتابة من اليمين إلى اليسار، مع وضعين للمظهر: فاتح وداكن.
+
+## أقسام الموقع
+
+- **الكتب**: كتب المؤلف.
+- **المدونة**: مقالاته وكتاباته.
+
+## التقنيات المستخدمة
+
+- [TanStack Start](https://tanstack.com/start) لبناء الموقع وتوجيه الصفحات.
+- [Tailwind CSS](https://tailwindcss.com) و [shadcn/ui](https://ui.shadcn.com) للتصميم والمكونات.
+- [Cloudflare Workers](https://workers.cloudflare.com) للاستضافة والنشر.
+- [Vite+](https://viteplus.dev) لأدوات التطوير والتدقيق والاختبار.
+
+## تعديل المحتوى
+
+- جميع نصوص الموقع موجودة في `src/content/ar.json`.
+- جميع الروابط (الصفحات وحسابات التواصل) موجودة في `src/constants/urls.ts`.
+
+## التشغيل محليًا
+
+</div>
 
 ```bash
 bun install
@@ -9,14 +32,22 @@ bun run build
 bun run deploy
 ```
 
-Preview a change without touching production:
+<div dir="rtl">
+
+لمعاينة أي تعديل دون المساس بالنسخة المنشورة:
+
+</div>
 
 ```bash
 bun run deploy:preview                            # https://<version>-melhamy.<subdomain>.workers.dev
 bun run deploy:preview -- --preview-alias my-pr   # https://my-pr-melhamy.<subdomain>.workers.dev
 ```
 
-Add a shadcn component:
+<div dir="rtl">
+
+لإضافة مكوّن من shadcn:
+
+</div>
 
 ```bash
 pnpm dlx shadcn@latest add button
