@@ -12,5 +12,12 @@
   // Settings for `wrangler preview` (run for PR/branch builds). Bindings and
   // vars are not inherited from the top level, so add Preview-safe ones here
   // when the Worker gains any. Assets and compatibility settings stay top-level.
-  "previews": {},
+  "previews": {
+    // Previews read the same books bucket. The Worker only reads from it.
+    "r2_buckets": [{ "binding": "BOOKS", "bucket_name": "melhamy-books" }],
+  },
+  // Book PDFs. Too large for static assets (25 MiB per file), so they live in
+  // R2 and are streamed by the /files/$ route.
+  // `remote: true` makes `vp dev` read the real bucket instead of a local copy.
+  "r2_buckets": [{ "binding": "BOOKS", "bucket_name": "melhamy-books", "remote": true }],
 }
