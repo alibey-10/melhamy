@@ -12,3 +12,6 @@ dist-ssr
 __unconfig*
 src/routeTree.gen.ts
 .sanity
+
+# Book PDFs live in R2 (bucket melhamy-books), never in git
+public/books
