@@ -11,9 +11,9 @@ export const NAV_URLS = {
 } as const
 
 export const SOCIAL_URLS = {
-  youtube: '#',
-  telegram: '#',
-  x: '#',
+  youtube: 'https://www.youtube.com/@melhamy',
+  telegram: 'https://web.telegram.org/a/#-1001002613976',
+  x: 'https://x.com/melhamy',
 } as const
 
 export type NavKey = keyof typeof NAV_URLS
