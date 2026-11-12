@@ -15,6 +15,8 @@ import {
 import { buttonVariants } from '@/components/ui/button'
 import { content } from '@/content'
 import { fill, formatSize } from '@/lib/format'
+import { PERSON_ID, absoluteUrl, breadcrumbLd, seo } from '@/lib/seo'
+import { urlFor } from '@/sanity/image'
 import { fileUrl, getBook, type Book } from '@/sanity/books'
 import { isRtl, languageName } from '@/sanity/languages'
 
@@ -33,16 +35,52 @@ export const Route = createFileRoute('/books/$slug')({
     if (!book) throw notFound()
     return book
   },
-  head: ({ loaderData }) => ({
-    meta: [
-      { title: `${loaderData?.title ?? content.nav.books} | ${content.site.name}` },
-      ...(loaderData?.description
-        ? [{ name: 'description', content: loaderData.description }]
-        : []),
-    ],
-  }),
+  // `?read=` opens the reader over the same page, so the canonical URL leaves it out.
+  head: ({ loaderData: book }) => (book ? bookSeo(book) : {}),
   component: BookPage,
 })
+
+/** Title, description, social card and Book structured data for one book. */
+function bookSeo(book: Book) {
+  const path = `/books/${book.slug}`
+  const description =
+    book.description ?? book.subtitle ?? fill(t.bookDescription, { title: book.title })
+  const image = book.cover
+    ? {
+        url: urlFor(book.cover).width(600).height(800).fit('crop').url(),
+        width: 600,
+        height: 800,
+        alt: book.cover.alt || book.title,
+      }
+    : undefined
+  return seo({
+    title: book.title,
+    description,
+    path,
+    image,
+    type: 'book',
+    jsonLd: [
+      {
+        '@type': 'Book',
+        name: book.title,
+        ...(book.subtitle ? { alternativeHeadline: book.subtitle } : {}),
+        description,
+        url: absoluteUrl(path),
+        author: { '@id': PERSON_ID, '@type': 'Person', name: content.site.name },
+        inLanguage: [...new Set(book.editions.map((e) => e.language))],
+        ...(image ? { image: image.url } : {}),
+        ...(book.publishedYear ? { datePublished: String(book.publishedYear) } : {}),
+        ...(book.publisher ? { publisher: { '@type': 'Organization', name: book.publisher } } : {}),
+        isAccessibleForFree: true,
+      },
+      breadcrumbLd([
+        [content.breadcrumb.home, '/'],
+        [content.nav.books, '/books'],
+        [book.title, path],
+      ]),
+    ],
+  })
+}
 
 function BookPage() {
   const book = Route.useLoaderData()

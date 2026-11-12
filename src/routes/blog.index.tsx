@@ -1,5 +1,6 @@
 import { Link, type LinkProps, createFileRoute } from '@tanstack/react-router'
 
+import { PostList } from '@/components/blog/post-list'
 import { AuthorNote } from '@/components/layout/author-note'
 import {
   Pagination,
@@ -11,7 +12,8 @@ import {
   PaginationPrevious,
 } from '@/components/ui/pagination'
 import { content } from '@/content'
-import { fill, formatDate } from '@/lib/format'
+import { fill } from '@/lib/format'
+import { seo } from '@/lib/seo'
 import { POSTS_PER_PAGE, getPosts } from '@/sanity/posts'
 
 const t = content.blog
@@ -24,9 +26,15 @@ export const Route = createFileRoute('/blog/')({
   },
   loaderDeps: ({ search }) => ({ page: search.page ?? 1 }),
   loader: ({ deps }) => getPosts({ data: deps.page }),
-  head: () => ({
-    meta: [{ title: `${content.nav.blog} | ${content.site.name}` }],
-  }),
+  // Each page of the list is its own canonical URL, with its own title.
+  head: ({ match }) => {
+    const page = match.search.page ?? 1
+    return seo({
+      title: page > 1 ? fill(t.pageTitle, { page }) : content.nav.blog,
+      description: t.description,
+      path: page > 1 ? `/blog?page=${page}` : '/blog',
+    })
+  },
   component: BlogPage,
 })
 
@@ -42,35 +50,9 @@ function BlogPage() {
       {posts.length === 0 ? (
         <p className="mt-12 text-muted-foreground">{t.empty}</p>
       ) : (
-        <ol className="mt-12 flex flex-col divide-y divide-border">
-          {posts.map((post) => (
-            <li key={post._id} className="py-8 first:pt-0">
-              <article className="flex flex-col gap-3">
-                <p className="flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-muted-foreground">
-                  <time dateTime={post.publishedAt}>{formatDate(post.publishedAt)}</time>
-                  {post.categories?.length ? (
-                    <>
-                      <span aria-hidden>·</span>
-                      <span>{post.categories.join('، ')}</span>
-                    </>
-                  ) : null}
-                </p>
-                <h2 className="text-2xl leading-snug font-bold">
-                  <Link
-                    to="/blog/$slug"
-                    params={{ slug: post.slug }}
-                    className="rounded-sm outline-none hover:underline focus-visible:ring-3 focus-visible:ring-ring/50"
-                  >
-                    {post.title}
-                  </Link>
-                </h2>
-                {post.excerpt ? (
-                  <p className="text-lg leading-loose text-muted-foreground">{post.excerpt}</p>
-                ) : null}
-              </article>
-            </li>
-          ))}
-        </ol>
+        <div className="mt-12">
+          <PostList posts={posts} />
+        </div>
       )}
 
       {pageCount > 1 ? (
