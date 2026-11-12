@@ -15,11 +15,14 @@
 - [Tailwind CSS](https://tailwindcss.com) و [shadcn/ui](https://ui.shadcn.com) للتصميم والمكونات.
 - [Cloudflare Workers](https://workers.cloudflare.com) للاستضافة والنشر.
 - [Vite+](https://viteplus.dev) لأدوات التطوير والتدقيق والاختبار.
+- [Sanity](https://www.sanity.io) لإدارة المحتوى.
 
 ## تعديل المحتوى
 
 - جميع نصوص الموقع موجودة في `src/content/ar.json`.
 - جميع الروابط (الصفحات وحسابات التواصل) موجودة في `src/constants/urls.ts`.
+- الكتب والمقالات تُدار من [Sanity](https://www.sanity.io) عبر لوحة التحرير على الرابط `/studio`.
+- إعدادات الاتصال بـ Sanity في `src/sanity/env.ts`، وأنواع المحتوى في `src/sanity/schema`.
 
 ## التشغيل محليًا
 
