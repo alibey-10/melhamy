@@ -49,7 +49,7 @@ const components: PortableTextComponents = {
     h2: ({ children }) => <h2 className="mt-12 text-2xl font-bold">{children}</h2>,
     h3: ({ children }) => <h3 className="mt-10 text-xl font-bold">{children}</h3>,
     blockquote: ({ children }) => (
-      <blockquote className="border-s-4 border-border ps-4 text-muted-foreground">
+      <blockquote className="border-s-4 border-copper/60 ps-4 text-muted-foreground">
         {children}
       </blockquote>
     ),
@@ -84,7 +84,7 @@ const components: PortableTextComponents = {
         <a
           href={href}
           {...(external ? { target: '_blank', rel: 'noreferrer' } : {})}
-          className="underline underline-offset-4 hover:text-muted-foreground"
+          className="text-primary underline decoration-copper/50 underline-offset-4 hover:decoration-primary"
         >
           {children}
         </a>

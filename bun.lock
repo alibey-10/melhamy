@@ -6,7 +6,8 @@
       "name": "light-starter",
       "dependencies": {
         "@base-ui/react": "^1.9.0",
-        "@fontsource-variable/inter": "^5.3.0",
+        "@fontsource-variable/markazi-text": "^5.3.0",
+        "@fontsource-variable/reem-kufi": "^5.3.0",
         "@hugeicons/core-free-icons": "^4.4.0",
         "@hugeicons/react": "^1.1.10",
         "@portabletext/react": "^8.0.1",
@@ -449,7 +450,9 @@
 
     "@floating-ui/utils": ["@floating-ui/utils@0.2.12", "", {}, "sha512-HpCo8tmWzLVad5s2d19EhAz5zqrrQ6s69qd6moPMQvkOuSwDT1YgRfWSVuc4ennqrgv3OHppiOGMQ7oC13yIww=="],
 
-    "@fontsource-variable/inter": ["@fontsource-variable/inter@5.3.0", "", {}, "sha512-OupL48va4JNofb97w6NYeF9S7W/kHNKM0Er8Dem5nqi4jeOLrVJDoE8tZEpnMJmtkvNbB1EIPPwHcdkF6b1oUA=="],
+    "@fontsource-variable/markazi-text": ["@fontsource-variable/markazi-text@5.3.0", "", {}, "sha512-Lg63OxmiMdTH/cDgXQ4cn9d5zVsvtf5+aGzHFFdTcDM6qbz0K6Liu/YBeTjFp6nE+5b3ElIaziPSaGXZXyDtJQ=="],
+
+    "@fontsource-variable/reem-kufi": ["@fontsource-variable/reem-kufi@5.3.0", "", {}, "sha512-Q2MbKKWX2JVUIGbs0GTdFp2GTahGmink5mFCo7kKLPYfbY9S8xdvCFC+eMSDI33jj8Cvox5QpWrifTUQol07iw=="],
 
     "@hugeicons/core-free-icons": ["@hugeicons/core-free-icons@4.4.0", "", {}, "sha512-7Mz8bmGoY6tZ6l3C2TXwNMLVSr0I8HPwjjFIERAuJFj3rWwLxdF2ZLkDqdrVuEE1dx5b/VXyIsP4WoSU6Q40KQ=="],
 
