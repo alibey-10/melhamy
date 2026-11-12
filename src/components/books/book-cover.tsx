@@ -8,9 +8,15 @@ import { urlFor } from '@/sanity/image'
 export function BookCover({
   cover,
   width,
+  placeholder = content.books.coverPlaceholder,
+  alt,
   className,
 }: {
   cover?: Cover
+  /** Text shown in the frame when there is no cover. */
+  placeholder?: string
+  /** Overrides the cover's own alt text, e.g. `""` when a link already names the book. */
+  alt?: string
   /** Rendered width in CSS pixels; the image is fetched at 2x. */
   width: number
   className?: string
@@ -30,15 +36,13 @@ export function BookCover({
             .height(height * 2)
             .fit('crop')
             .url()}
-          alt={cover.alt ?? ''}
+          alt={alt ?? cover.alt ?? ''}
           width={width}
           height={height}
           className="size-full object-cover"
         />
       ) : (
-        <span className="p-2 text-center text-sm text-muted-foreground">
-          {content.books.coverPlaceholder}
-        </span>
+        <span className="p-2 text-center text-sm text-muted-foreground">{placeholder}</span>
       )}
     </div>
   )

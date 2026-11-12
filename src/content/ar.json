@@ -31,13 +31,29 @@
   "books": {
     "empty": "لا توجد كتب بعد",
     "coverPlaceholder": "غلاف الكتاب",
-    "latestEdition": "أحدث طبعة",
-    "languages": "لغات",
     "publishedYear": "تاريخ النشر",
     "publisher": "دار النشر",
-    "allBooks": "كل الكتب",
-    "downloadTitle": "تحميل الكتاب",
     "pages": "{count} صفحة",
-    "translator": "ترجمة: {name}"
+    "translator": "ترجمة: {name}",
+    "read": "قراءة",
+    "download": "تحميل",
+    "filesTitle": "قراءة الكتاب وتحميله",
+    "aboutTitle": "عن الكتاب"
+  },
+  "reader": {
+    "close": "إغلاق القارئ",
+    "previous": "الصفحة السابقة",
+    "next": "الصفحة التالية",
+    "pageOf": "من {count}",
+    "pageInput": "رقم الصفحة",
+    "zoomIn": "تكبير",
+    "zoomOut": "تصغير",
+    "download": "تحميل الملف",
+    "loading": "جارٍ فتح الكتاب…",
+    "error": "تعذّر فتح الكتاب، يمكنك تحميله بدلًا من ذلك."
+  },
+  "breadcrumb": {
+    "label": "مسار التنقل",
+    "home": "الرئيسية"
   }
 }
