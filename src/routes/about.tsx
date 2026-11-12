@@ -1,9 +1,8 @@
-import { createFileRoute } from '@tanstack/react-router'
-import { HugeiconsIcon, type IconSvgElement } from '@hugeicons/react'
-import { NewTwitterIcon, TelegramIcon, YoutubeIcon } from '@hugeicons/core-free-icons'
+import { Link, createFileRoute } from '@tanstack/react-router'
+import { HugeiconsIcon } from '@hugeicons/react'
+import { FavouriteIcon } from '@hugeicons/core-free-icons'
 
-import { BookGrid } from '@/components/books/book-grid'
-import { SOCIAL_URLS } from '@/constants/urls'
+import { SUPPORT_URL } from '@/constants/urls'
 import { content } from '@/content'
 import { fill } from '@/lib/format'
 import { PERSON_ID, breadcrumbLd, personLd, seo } from '@/lib/seo'
@@ -11,12 +10,6 @@ import { getBooks } from '@/sanity/books'
 import { getPostStats } from '@/sanity/posts'
 
 const t = content.about
-
-const CHANNELS: { key: 'youtube' | 'telegram' | 'x'; icon: IconSvgElement }[] = [
-  { key: 'youtube', icon: YoutubeIcon },
-  { key: 'telegram', icon: TelegramIcon },
-  { key: 'x', icon: NewTwitterIcon },
-]
 
 export const Route = createFileRoute('/about')({
   loader: async () => {
@@ -96,30 +89,31 @@ function AboutPage() {
           <h2 id="books-title" className="mb-6 text-2xl font-semibold">
             {t.booksTitle}
           </h2>
-          <BookGrid books={books} columns="grid-cols-2 sm:grid-cols-3" />
+          <ul className="list-disc ps-6 text-lg leading-loose marker:text-muted-foreground sm:text-xl sm:leading-loose">
+            {books.map((book) => (
+              <li key={book._id} className="mt-2 ps-1 first:mt-0">
+                <Link
+                  to="/books/$slug"
+                  params={{ slug: book.slug }}
+                  className="rounded-sm text-primary underline decoration-copper/50 underline-offset-4 outline-none transition-colors hover:decoration-primary focus-visible:ring-3 focus-visible:ring-ring/50"
+                >
+                  {book.title}
+                </Link>
+              </li>
+            ))}
+          </ul>
         </section>
       ) : null}
 
-      <section aria-labelledby="channels-title" className="mt-16">
-        <h2 id="channels-title" className="mb-6 text-2xl font-semibold">
-          {t.channelsTitle}
-        </h2>
-        <ul className="flex flex-wrap gap-3">
-          {CHANNELS.map(({ key, icon }) => (
-            <li key={key}>
-              <a
-                href={SOCIAL_URLS[key]}
-                target="_blank"
-                rel="noopener noreferrer me"
-                className="inline-flex items-center gap-2 rounded-lg border bg-background px-4 py-2 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
-              >
-                <HugeiconsIcon icon={icon} className="size-5" />
-                {content.social[key]}
-              </a>
-            </li>
-          ))}
-        </ul>
-      </section>
+      <a
+        href={SUPPORT_URL}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="mt-16 inline-flex items-center gap-2 rounded-lg border bg-background px-4 py-2 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+      >
+        <HugeiconsIcon icon={FavouriteIcon} className="size-5" />
+        {content.footer.support}
+      </a>
     </div>
   )
 }
