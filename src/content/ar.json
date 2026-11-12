@@ -1,0 +1,25 @@
+{
+  "site": {
+    "name": "محمد إلهامي",
+    "tagline": "مؤرخ وكاتب"
+  },
+  "header": {
+    "openMenu": "فتح القائمة",
+    "closeMenu": "إغلاق القائمة",
+    "mainNavLabel": "التنقل الرئيسي"
+  },
+  "nav": {
+    "books": "الكتب",
+    "blog": "المدونة"
+  },
+  "footer": {
+    "linksTitle": "روابط",
+    "socialTitle": "تابعنا",
+    "copyright": "جميع الحقوق محفوظة"
+  },
+  "social": {
+    "youtube": "يوتيوب",
+    "telegram": "تيليجرام",
+    "x": "إكس"
+  }
+}

@@ -2,6 +2,10 @@ import { HeadContent, Scripts, createRootRoute } from '@tanstack/react-router'
 import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools'
 import { TanStackDevtools } from '@tanstack/react-devtools'
 
+import { SiteFooter } from '@/components/layout/site-footer'
+import { SiteHeader } from '@/components/layout/site-header'
+import { content } from '@/content'
+
 import appCss from '../styles.css?url'
 
 export const Route = createRootRoute({
@@ -15,7 +19,7 @@ export const Route = createRootRoute({
         content: 'width=device-width, initial-scale=1',
       },
       {
-        title: 'TanStack Start Starter',
+        title: content.site.name,
       },
     ],
     links: [
@@ -30,12 +34,14 @@ export const Route = createRootRoute({
 
 function RootDocument({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className="scroll-smooth antialiased">
+    <html lang="ar" dir="rtl" className="scroll-smooth antialiased">
       <head>
         <HeadContent />
       </head>
-      <body>
-        {children}
+      <body className="flex min-h-svh flex-col">
+        <SiteHeader />
+        <main className="flex-1">{children}</main>
+        <SiteFooter />
         <TanStackDevtools
           config={{
             position: 'bottom-right',
