@@ -1,7 +1,7 @@
 {
   "site": {
     "name": "محمد إلهامي",
-    "tagline": "مؤرخ وكاتب"
+    "tagline": "باحث في التاريخ والحضارة الإسلامية، ماجستير الاقتصاد الإسلامي، عضو الأمانة العامة لـ الهيئة العالمية لأنصار النبيﷺ ورئيس تحرير مجلة أنصار النبي"
   },
   "header": {
     "openMenu": "فتح القائمة",
@@ -30,11 +30,14 @@
   },
   "books": {
     "empty": "لا توجد كتب بعد",
-    "wholeBook": "الكتاب كاملًا",
-    "partsCount": "عدد الأجزاء: {count}",
+    "coverPlaceholder": "غلاف الكتاب",
+    "latestEdition": "أحدث طبعة",
+    "languages": "لغات",
+    "publishedYear": "تاريخ النشر",
+    "publisher": "دار النشر",
+    "allBooks": "كل الكتب",
+    "downloadTitle": "تحميل الكتاب",
     "pages": "{count} صفحة",
-    "translator": "ترجمة: {name}",
-    "open": "فتح",
-    "editionsLabel": "النسخ المتاحة"
+    "translator": "ترجمة: {name}"
   }
 }
