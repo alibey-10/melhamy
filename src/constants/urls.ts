@@ -6,8 +6,8 @@
 export const HOME_URL = '/'
 
 export const NAV_URLS = {
-  books: '#',
-  blog: '#',
+  books: '/books',
+  blog: '/blog',
 } as const
 
 export const SOCIAL_URLS = {
