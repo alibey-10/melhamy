@@ -17,6 +17,9 @@ export const SOCIAL_URLS = {
   sourceCode: 'https://github.com/alibey-10/melhamy',
 } as const
 
+/** Patreon page for supporting the site — shown as a standalone link in the footer. */
+export const SUPPORT_URL = 'https://www.patreon.com/moarrekh'
+
 export type NavKey = keyof typeof NAV_URLS
 export type SocialKey = keyof typeof SOCIAL_URLS
 

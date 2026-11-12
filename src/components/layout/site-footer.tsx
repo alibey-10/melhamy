@@ -1,7 +1,20 @@
 import { HugeiconsIcon, type IconSvgElement } from '@hugeicons/react'
-import { NewTwitterIcon, GithubIcon, TelegramIcon, YoutubeIcon } from '@hugeicons/core-free-icons'
+import {
+  FavouriteIcon,
+  GithubIcon,
+  NewTwitterIcon,
+  TelegramIcon,
+  YoutubeIcon,
+} from '@hugeicons/core-free-icons'
 
-import { NAV_ORDER, NAV_URLS, SOCIAL_ORDER, SOCIAL_URLS, type SocialKey } from '@/constants/urls'
+import {
+  NAV_ORDER,
+  NAV_URLS,
+  SOCIAL_ORDER,
+  SOCIAL_URLS,
+  SUPPORT_URL,
+  type SocialKey,
+} from '@/constants/urls'
 import { content } from '@/content'
 
 const SOCIAL_ICONS: Record<SocialKey, IconSvgElement> = {
@@ -57,6 +70,15 @@ export function SiteFooter() {
               </li>
             ))}
           </ul>
+          <a
+            href={SUPPORT_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-4 inline-flex items-center gap-2 rounded-lg border bg-background px-4 py-2 text-sm font-medium text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+          >
+            <HugeiconsIcon icon={FavouriteIcon} className="size-4" />
+            {footer.support}
+          </a>
         </div>
       </div>
 
