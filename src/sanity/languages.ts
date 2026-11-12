@@ -16,3 +16,10 @@ export const BOOK_LANGUAGES = [
 export function languageName(code: string) {
   return BOOK_LANGUAGES.find((l) => l.value === code)?.title ?? code
 }
+
+const RTL_LANGUAGES = new Set(['ar', 'ur', 'fa', 'he'])
+
+/** Whether a language is written right to left (its book pages turn leftwards). */
+export function isRtl(code: string) {
+  return RTL_LANGUAGES.has(code)
+}

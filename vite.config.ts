@@ -1,3 +1,6 @@
+import { createRequire } from 'node:module'
+import path from 'node:path'
+
 import { defineConfig, lazyPlugins } from 'vite-plus'
 import { devtools } from '@tanstack/devtools-vite'
 
@@ -7,6 +10,14 @@ import viteReact, { reactCompilerPreset } from '@vitejs/plugin-react'
 import babel from '@rolldown/plugin-babel'
 import tailwindcss from '@tailwindcss/vite'
 import { cloudflare } from '@cloudflare/vite-plugin'
+import { viteStaticCopy } from 'vite-plugin-static-copy'
+
+// PDF.js data files the book reader loads at runtime (see src/components/books/pdf-reader.tsx):
+// CMaps and standard fonts for Arabic and other non-Latin text, plus WASM image decoders.
+// Served from /pdfjs/ on our own origin instead of a third-party CDN.
+const pdfjsDir = path
+  .dirname(createRequire(import.meta.url).resolve('pdfjs-dist/package.json'))
+  .replaceAll(path.sep, '/')
 
 const config = defineConfig({
   staged: {
@@ -48,6 +59,13 @@ const config = defineConfig({
     devtools(),
     cloudflare({ viteEnvironment: { name: 'ssr' } }),
     tailwindcss(),
+    viteStaticCopy({
+      targets: ['cmaps', 'standard_fonts', 'wasm', 'iccs'].map((dir) => ({
+        src: `${pdfjsDir}/${dir}/*`,
+        dest: `pdfjs/${dir}`,
+        rename: { stripBase: true },
+      })),
+    }),
     tanstackStart(),
     viteReact(),
     babel({ presets: [reactCompilerPreset()] }),
