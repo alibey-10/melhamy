@@ -11,7 +11,9 @@ import {
 } from '@/components/ui/breadcrumb'
 import { content } from '@/content'
 import { formatDate } from '@/lib/format'
-import { getPost } from '@/sanity/posts'
+import { PERSON_ID, WEBSITE_ID, absoluteUrl, breadcrumbLd, seo } from '@/lib/seo'
+import { urlFor } from '@/sanity/image'
+import { getPost, type Post } from '@/sanity/posts'
 
 export const Route = createFileRoute('/blog/$slug')({
   loader: async ({ params }) => {
@@ -19,14 +21,51 @@ export const Route = createFileRoute('/blog/$slug')({
     if (!post) throw notFound()
     return post
   },
-  head: ({ loaderData }) => ({
-    meta: [
-      { title: `${loaderData?.title ?? content.nav.blog} | ${content.site.name}` },
-      ...(loaderData?.excerpt ? [{ name: 'description', content: loaderData.excerpt }] : []),
-    ],
-  }),
+  head: ({ loaderData: post }) => (post ? postSeo(post) : {}),
   component: PostPage,
 })
+
+/** Title, description, social card and Article structured data for one article. */
+function postSeo(post: Post) {
+  const path = `/blog/${post.slug}`
+  const image = post.image
+    ? {
+        url: urlFor(post.image).width(1200).height(630).fit('crop').url(),
+        width: 1200,
+        height: 630,
+        alt: post.image.alt || post.title,
+      }
+    : undefined
+  return seo({
+    title: post.title,
+    description: post.excerpt ?? post.title,
+    path,
+    image,
+    type: 'article',
+    publishedTime: post.publishedAt,
+    jsonLd: [
+      {
+        '@type': 'BlogPosting',
+        headline: post.title,
+        description: post.excerpt,
+        url: absoluteUrl(path),
+        mainEntityOfPage: absoluteUrl(path),
+        datePublished: post.publishedAt,
+        inLanguage: 'ar',
+        author: { '@id': PERSON_ID, '@type': 'Person', name: content.site.name },
+        publisher: { '@id': PERSON_ID },
+        isPartOf: { '@id': WEBSITE_ID },
+        ...(image ? { image: image.url } : {}),
+        ...(post.categories?.length ? { keywords: post.categories.join('، ') } : {}),
+      },
+      breadcrumbLd([
+        [content.breadcrumb.home, '/'],
+        [content.nav.blog, '/blog'],
+        [post.title, path],
+      ]),
+    ],
+  })
+}
 
 function PostPage() {
   const post = Route.useLoaderData()

@@ -33,6 +33,27 @@ bunx sanity exec scripts/import-blogger.ts --with-user-token -- --limit 20
 
 <div dir="rtl">
 
+## تحويل المدونة القديمة إلى الموقع
+
+كل مقال منقول يحفظ رابطه القديم على Blogger، والمسار `/blogspot?u=<الرابط القديم>` يحوّل الزائر تحويلًا دائمًا (301) إلى المقال نفسه هنا، وصفحات المدونة الأخرى (الرئيسية والتصنيفات والأرشيف) إلى أقرب قسم. بهذا ينتقل ما للمقالات القديمة من رصيد في محركات البحث إلى الموقع الجديد.
+
+لتفعيله: من لوحة Blogger ← المظهر ← تعديل HTML، يُلصق هذا مباشرة بعد `<head>`، ثم يُحفظ. لا يُفعَّل قبل نقل كل المقالات، وإلا ذهب زوار المقالات غير المنقولة إلى صفحة المدونة.
+
+</div>
+
+```xml
+<meta http-equiv='refresh' expr:content='&quot;0;url=https://melhamy.com/blogspot?u=&quot; + data:blog.url'/>
+<script>location.replace('https://melhamy.com/blogspot?u=' + encodeURIComponent(location.href))</script>
+```
+
+<div dir="rtl">
+
+بعدها: إضافة melhamy.com إلى Google Search Console وإرسال `https://melhamy.com/sitemap.xml`، مع إبقاء موقع المدونة القديمة في Search Console لمتابعة انتقال الزيارات.
+
+</div>
+
+<div dir="rtl">
+
 ## التشغيل محليًا
 
 </div>
