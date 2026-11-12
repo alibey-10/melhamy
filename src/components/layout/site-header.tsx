@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { HugeiconsIcon } from '@hugeicons/react'
 import { Cancel01Icon, Menu01Icon } from '@hugeicons/core-free-icons'
 
+import { SearchCommand } from '@/components/search/search-command'
 import { Button, buttonVariants } from '@/components/ui/button'
 import { ThemeToggle } from '@/components/ui/theme-toggle'
 import { HOME_URL, NAV_ORDER, NAV_URLS } from '@/constants/urls'
@@ -55,6 +56,8 @@ export function SiteHeader() {
         </nav>
 
         <div className="flex items-center gap-1">
+          <SearchCommand />
+
           <ThemeToggle
             toggled={dark}
             onClick={toggleTheme}
