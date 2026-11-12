@@ -55,5 +55,15 @@
   "breadcrumb": {
     "label": "مسار التنقل",
     "home": "الرئيسية"
+  },
+  "blog": {
+    "empty": "لا توجد مقالات بعد",
+    "footnotesTitle": "الهوامش",
+    "video": "فيديو",
+    "backToReference": "العودة إلى موضع الهامش",
+    "pagination": "صفحات المقالات",
+    "newer": "الأحدث",
+    "older": "الأقدم",
+    "pageOf": "صفحة {page} من {count}"
   }
 }
