@@ -28,7 +28,14 @@ export function SiteHeader() {
   return (
     <header className="sticky top-0 z-40 border-b bg-background/80 backdrop-blur">
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-4 px-4">
-        <a href={HOME_URL} className="text-xl font-bold tracking-tight">
+        <a href={HOME_URL} className="flex items-center gap-3 font-heading text-2xl font-semibold">
+          <img
+            src="/author.webp"
+            alt=""
+            width={40}
+            height={40}
+            className="size-10 rounded-full border border-copper/60 object-cover"
+          />
           {site.name}
         </a>
 

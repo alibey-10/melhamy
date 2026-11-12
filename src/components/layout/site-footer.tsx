@@ -32,7 +32,7 @@ export function SiteFooter() {
     <footer className="border-t bg-muted/40">
       <div className="mx-auto grid max-w-6xl gap-8 px-4 py-10 md:grid-cols-3">
         <div className="space-y-2">
-          <p className="text-lg font-bold">{site.name}</p>
+          <p className="font-heading text-xl font-semibold">{site.name}</p>
           <p className="text-sm leading-relaxed text-muted-foreground">{site.tagline}</p>
         </div>
 
