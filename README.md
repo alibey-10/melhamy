@@ -9,6 +9,13 @@ bun run build
 bun run deploy
 ```
 
+Preview a change without touching production:
+
+```bash
+bun run deploy:preview                            # https://<version>-melhamy.<subdomain>.workers.dev
+bun run deploy:preview -- --preview-alias my-pr   # https://my-pr-melhamy.<subdomain>.workers.dev
+```
+
 Add a shadcn component:
 
 ```bash

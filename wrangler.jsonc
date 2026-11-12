@@ -4,4 +4,13 @@
   "compatibility_date": "2025-09-02",
   "compatibility_flags": ["nodejs_compat"],
   "main": "@tanstack/react-start/server-entry",
+  // Preview URLs are served from workers.dev, so it must stay enabled.
+  "workers_dev": true,
+  // Serve each uploaded version at <version>-melhamy.<subdomain>.workers.dev
+  // and each --preview-alias at <alias>-melhamy.<subdomain>.workers.dev.
+  "preview_urls": true,
+  // Settings for `wrangler preview` (run for PR/branch builds). Bindings and
+  // vars are not inherited from the top level, so add Preview-safe ones here
+  // when the Worker gains any. Assets and compatibility settings stay top-level.
+  "previews": {},
 }

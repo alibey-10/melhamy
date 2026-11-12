@@ -11,6 +11,7 @@
     "build": "vp build",
     "preview": "vp preview",
     "deploy": "bun run build && wrangler deploy",
+    "deploy:preview": "bun run build && wrangler versions upload",
     "prepare": "vp config"
   },
   "dependencies": {
