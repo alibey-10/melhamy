@@ -63,7 +63,7 @@ type RawBook = BookSummary & { subtitle?: string; description?: string }
 type RawPost = PostHit & { excerpt?: string; text?: string }
 
 /** The query's words, without GROQ wildcard or quote characters. */
-function toWords(query: string) {
+export function toWords(query: string) {
   return query
     .slice(0, MAX_QUERY_LENGTH)
     .split(/\s+/)
