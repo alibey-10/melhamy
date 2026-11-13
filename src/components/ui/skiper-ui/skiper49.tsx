@@ -24,6 +24,8 @@ export function CoverflowCarousel({
   loop = true,
   showPagination = true,
   showNavigation = true,
+  slideShadows = true,
+  slideClassName = 'overflow-hidden rounded-xl',
   previousLabel,
   nextLabel,
   onSwiper,
@@ -36,6 +38,9 @@ export function CoverflowCarousel({
   loop?: boolean
   showPagination?: boolean
   showNavigation?: boolean
+  /** Swiper's dark gradient over side slides. Turn off for slides with their own depth. */
+  slideShadows?: boolean
+  slideClassName?: string
   previousLabel: string
   nextLabel: string
   onSwiper?: (swiper: SwiperInstance) => void
@@ -61,7 +66,7 @@ export function CoverflowCarousel({
         loop={loop}
         keyboard={{ enabled: true }}
         speed={reduceMotion ? 0 : 300}
-        coverflowEffect={{ rotate: 40, stretch: 0, depth: 100, modifier: 1, slideShadows: true }}
+        coverflowEffect={{ rotate: 40, stretch: 0, depth: 100, modifier: 1, slideShadows }}
         pagination={showPagination ? { clickable: true } : false}
         modules={[EffectCoverflow, Keyboard, Pagination]}
         onSwiper={(instance) => {
@@ -75,7 +80,7 @@ export function CoverflowCarousel({
         {slides.map((slide) => (
           <SwiperSlide
             key={slide.key}
-            className="overflow-hidden rounded-xl"
+            className={slideClassName}
             style={{ width: slideWidth, height: slideHeight }}
           >
             {slide.content}

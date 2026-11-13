@@ -3,7 +3,7 @@ import { ClientOnly, Link, createFileRoute, notFound, useRouter } from '@tanstac
 import { HugeiconsIcon } from '@hugeicons/react'
 import { BookOpen01Icon, Download01Icon, Loading03Icon } from '@hugeicons/core-free-icons'
 
-import { BookCover } from '@/components/books/book-cover'
+import { SanityBook3D, book3DToneAt } from '@/components/books/sanity-book-3d'
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -17,7 +17,7 @@ import { content } from '@/content'
 import { fill, formatSize } from '@/lib/format'
 import { PERSON_ID, absoluteUrl, breadcrumbLd, seo } from '@/lib/seo'
 import { urlFor } from '@/sanity/image'
-import { fileUrl, getBook, type Book } from '@/sanity/books'
+import { fileUrl, getBook, getBooks, type Book } from '@/sanity/books'
 import { isRtl, languageName } from '@/sanity/languages'
 
 const t = content.books
@@ -31,9 +31,16 @@ export const Route = createFileRoute('/books/$slug')({
     read: typeof search.read === 'string' ? search.read : undefined,
   }),
   loader: async ({ params }) => {
-    const book = await getBook({ data: params.slug })
+    const [book, books] = await Promise.all([getBook({ data: params.slug }), getBooks()])
     if (!book) throw notFound()
-    return book
+    // The book's place in the list picks its cover colour, so it matches the grid and carousel.
+    return {
+      ...book,
+      listIndex: Math.max(
+        0,
+        books.findIndex((b) => b._id === book._id),
+      ),
+    }
   },
   // `?read=` opens the reader over the same page, so the canonical URL leaves it out.
   head: ({ loaderData: book }) => (book ? bookSeo(book) : {}),
@@ -109,8 +116,14 @@ function BookPage() {
       {/* Two columns from `sm`: the cover stays in view (below the sticky site header)
           while the breadcrumb, details, description and files scroll beside it. */}
       <div className="flex flex-col gap-8 sm:flex-row sm:items-start lg:gap-12">
-        <aside className="shrink-0 sm:sticky sm:top-24">
-          <BookCover cover={book.cover} width={256} className="w-44 sm:w-56 lg:w-64" />
+        <aside className="shrink-0 self-center sm:sticky sm:top-24 sm:self-start">
+          <SanityBook3D
+            book={book}
+            tone={book3DToneAt(book.listIndex)}
+            width={224}
+            angle={18}
+            typeset
+          />
         </aside>
 
         <div className="min-w-0 flex-1">

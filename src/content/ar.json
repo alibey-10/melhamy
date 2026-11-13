@@ -38,9 +38,6 @@
   "books": {
     "empty": "لا توجد كتب بعد",
     "coverPlaceholder": "غلاف الكتاب",
-    "viewLabel": "طريقة عرض الكتب",
-    "viewGrid": "شبكة",
-    "viewCarousel": "عرض دوّار",
     "previousBook": "الكتاب السابق",
     "nextBook": "الكتاب التالي",
     "publishedYear": "تاريخ النشر",
@@ -53,6 +50,9 @@
     "aboutTitle": "عن الكتاب",
     "description": "كتب المؤرخ محمد إلهامي، للقراءة على الموقع والتحميل مجانًا بصيغة PDF.",
     "bookDescription": "كتاب «{title}» للمؤرخ محمد إلهامي، للقراءة على الموقع والتحميل مجانًا بصيغة PDF."
+  },
+  "book3d": {
+    "open": "تصفّح «{title}»"
   },
   "reader": {
     "close": "إغلاق القارئ",

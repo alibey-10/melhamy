@@ -27,13 +27,13 @@ export type BookCover = SanityImageSource & { alt?: string }
 export type BookSummary = {
   _id: string
   title: string
+  subtitle?: string
   slug: string
   cover?: BookCover
 }
 
 /** Everything the book page shows, including the downloadable files. */
 export type Book = BookSummary & {
-  subtitle?: string
   description?: string
   publishedYear?: number
   publisher?: string
@@ -41,7 +41,7 @@ export type Book = BookSummary & {
 }
 
 const BOOKS_QUERY = `*[_type == "book" && defined(slug.current) && count(editions) > 0] | order(title asc) {
-  _id, title, "slug": slug.current, cover
+  _id, title, subtitle, "slug": slug.current, cover
 }`
 
 const BOOK_QUERY = `*[_type == "book" && slug.current == $slug && count(editions) > 0][0] {
