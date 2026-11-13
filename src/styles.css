@@ -1,3 +1,5 @@
+@layer ui-sdk;
+
 @import 'tailwindcss';
 @plugin '@tailwindcss/typography';
 
@@ -5,6 +7,7 @@
 @import 'shadcn/tailwind.css';
 @import '@fontsource-variable/reem-kufi';
 @import '@fontsource-variable/markazi-text';
+@import './components/books/book-3d.css';
 
 @custom-variant dark (&:is(.dark *));
 

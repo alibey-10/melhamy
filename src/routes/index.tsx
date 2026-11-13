@@ -57,7 +57,7 @@ function Home() {
         <section aria-labelledby="books-title" className="mt-16">
           <SectionHeading id="books-title" title={t.booksTitle} to="/books" more={t.allBooks} />
           <div className="overflow-hidden">
-            <BookCarousel books={books} />
+            <BookCarousel books={books} variant="3d-typeset" />
           </div>
         </section>
       ) : null}
