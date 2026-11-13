@@ -159,30 +159,31 @@ function BookPage() {
             <h2 id="files-title" className="text-xl font-bold">
               {t.filesTitle}
             </h2>
-            <ul className="mt-4 grid gap-3 lg:grid-cols-2">
+            {/* One compact row per file, so a book in many languages stays easy to scan. */}
+            <ul className="mt-4 divide-y divide-border border-y border-border">
               {files.map((f) => (
-                <li
-                  key={f.key}
-                  className="flex flex-col gap-4 rounded-2xl border border-border bg-card p-4 text-card-foreground"
-                >
-                  <div className="flex flex-col gap-1">
-                    <h3 className="text-lg font-semibold">{f.label}</h3>
-                    {f.note ? (
-                      <p className="text-sm text-muted-foreground" dir="auto" lang={f.language}>
-                        {f.note}
+                <li key={f.key} className="flex items-center gap-4 py-3">
+                  <div className="flex min-w-0 flex-1 flex-col gap-0.5">
+                    <h3 className="font-semibold">{f.label}</h3>
+                    {f.note || f.meta ? (
+                      <p className="text-sm text-muted-foreground">
+                        {f.note ? (
+                          <span dir="auto" lang={f.language}>
+                            {f.note}
+                          </span>
+                        ) : null}
+                        {f.note && f.meta ? ' · ' : null}
+                        {f.meta ? <span className="tabular-nums">{f.meta}</span> : null}
                       </p>
                     ) : null}
-                    {f.meta ? (
-                      <p className="text-xs text-muted-foreground tabular-nums">{f.meta}</p>
-                    ) : null}
                   </div>
-                  <div className="mt-auto flex gap-2">
+                  <div className="flex shrink-0 gap-1.5">
                     <Link
                       from={Route.fullPath}
                       search={{ read: f.key }}
                       resetScroll={false}
                       onClick={() => (openedHere.current = true)}
-                      className={buttonVariants({ size: 'lg', className: 'flex-1 px-4' })}
+                      className={buttonVariants({ variant: 'secondary' })}
                     >
                       <HugeiconsIcon icon={BookOpen01Icon} data-icon="inline-start" />
                       {t.read}
@@ -190,14 +191,11 @@ function BookPage() {
                     <a
                       href={f.href}
                       download
-                      className={buttonVariants({
-                        variant: 'outline',
-                        size: 'lg',
-                        className: 'flex-1 px-4',
-                      })}
+                      aria-label={`${t.download} · ${f.label}`}
+                      title={t.download}
+                      className={buttonVariants({ variant: 'outline', size: 'icon' })}
                     >
-                      <HugeiconsIcon icon={Download01Icon} data-icon="inline-start" />
-                      {t.download}
+                      <HugeiconsIcon icon={Download01Icon} />
                     </a>
                   </div>
                 </li>
