@@ -38,6 +38,11 @@
   "books": {
     "empty": "لا توجد كتب بعد",
     "coverPlaceholder": "غلاف الكتاب",
+    "viewLabel": "طريقة عرض الكتب",
+    "viewGrid": "شبكة",
+    "viewCarousel": "عرض دوّار",
+    "previousBook": "الكتاب السابق",
+    "nextBook": "الكتاب التالي",
     "publishedYear": "تاريخ النشر",
     "publisher": "دار النشر",
     "pages": "{count} صفحة",

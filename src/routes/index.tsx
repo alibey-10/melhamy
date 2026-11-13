@@ -2,7 +2,7 @@ import { Link, createFileRoute } from '@tanstack/react-router'
 import { HugeiconsIcon } from '@hugeicons/react'
 import { ArrowLeft01Icon } from '@hugeicons/core-free-icons'
 
-import { BookGrid } from '@/components/books/book-grid'
+import { BookCarousel } from '@/components/books/book-carousel'
 import { PostList } from '@/components/blog/post-list'
 import { content } from '@/content'
 import { personLd, seo, websiteLd } from '@/lib/seo'
@@ -53,19 +53,22 @@ function Home() {
         </div>
       </header>
 
-      <div className="mt-16 grid gap-16 lg:grid-cols-[minmax(0,3fr)_minmax(0,2fr)] lg:gap-12">
-        <section aria-labelledby="latest-title">
-          <SectionHeading id="latest-title" title={t.latestTitle} to="/blog" more={t.allPosts} />
-          <PostList posts={posts} headingLevel="h3" />
+      {books.length ? (
+        <section aria-labelledby="books-title" className="mt-16">
+          <SectionHeading id="books-title" title={t.booksTitle} to="/books" more={t.allBooks} />
+          <div className="overflow-hidden">
+            <BookCarousel books={books} />
+          </div>
         </section>
+      ) : null}
 
-        {books.length ? (
-          <section aria-labelledby="books-title">
-            <SectionHeading id="books-title" title={t.booksTitle} to="/books" more={t.allBooks} />
-            <BookGrid books={books} columns="grid-cols-2 sm:grid-cols-3 lg:grid-cols-2" />
-          </section>
-        ) : null}
-      </div>
+      <section aria-labelledby="latest-title" className="mt-16">
+        <SectionHeading id="latest-title" title={t.latestTitle} to="/blog" more={t.allPosts} />
+        {/* Keep excerpts at a comfortable line length on wide screens. */}
+        <div className="max-w-3xl">
+          <PostList posts={posts} headingLevel="h3" />
+        </div>
+      </section>
     </div>
   )
 }
