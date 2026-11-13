@@ -29,3 +29,9 @@ release. Add a tool name to select part of the graph. For example, run
 - [ ] If setup, runtime, or package-manager behavior looks wrong, run `vp env doctor` and include its output when asking for help.
 
 <!--VITE PLUS END-->
+
+# Using ui-sdk
+
+Before using ui-sdk (`@ui-sdk/react`, `@ui-sdk/core`), follow the `ui-sdk` skill if it's installed, and read `node_modules/@ui-sdk/react/docs/llms.txt`.
+
+To build a new component, also search `node_modules/@ui-sdk/react/docs/core.md` by heading, and read `node_modules/@ui-sdk/react/docs/rendering.md` next to it.
