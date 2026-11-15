@@ -48,6 +48,13 @@ function RootDocument({ children }: { children: React.ReactNode }) {
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
         <HeadContent />
+        {isStudio ? null : (
+          <script
+            src="https://analytics.ahrefs.com/analytics.js"
+            data-key="03MiBTdKHEbSuFFGkHxRRg"
+            async
+          />
+        )}
       </head>
       <body className="flex min-h-svh flex-col">
         {isStudio ? (
