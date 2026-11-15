@@ -2,6 +2,7 @@ import { HugeiconsIcon, type IconSvgElement } from '@hugeicons/react'
 import {
   FavouriteIcon,
   GithubIcon,
+  InformationCircleIcon,
   NewTwitterIcon,
   TelegramIcon,
   YoutubeIcon,
@@ -29,64 +30,73 @@ export function SiteFooter() {
   const year = new Date().getFullYear()
 
   return (
-    <footer className="border-t bg-muted/40">
-      <div className="mx-auto grid max-w-6xl gap-8 px-4 py-10 md:grid-cols-3">
-        <div className="space-y-2">
-          <p className="font-heading text-xl font-semibold">{site.name}</p>
-          <p className="text-sm leading-relaxed text-muted-foreground">{site.tagline}</p>
-        </div>
-
-        <nav aria-label={footer.linksTitle}>
-          <h2 className="mb-3 text-sm font-semibold">{footer.linksTitle}</h2>
-          <ul className="space-y-2">
-            {NAV_ORDER.map((key) => (
-              <li key={key}>
-                <a
-                  href={NAV_URLS[key]}
-                  className="text-sm text-muted-foreground transition-colors hover:text-foreground"
-                >
-                  {nav[key]}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </nav>
-
-        <div>
-          <h2 className="mb-3 text-sm font-semibold">{footer.socialTitle}</h2>
-          <ul className="flex gap-2">
-            {SOCIAL_ORDER.map((key) => (
-              <li key={key}>
-                <a
-                  href={SOCIAL_URLS[key]}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={social[key]}
-                  title={social[key]}
-                  className="inline-flex size-10 items-center justify-center rounded-lg border bg-background text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
-                >
-                  <HugeiconsIcon icon={SOCIAL_ICONS[key]} className="size-5" />
-                </a>
-              </li>
-            ))}
-          </ul>
-          <a
-            href={SUPPORT_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="mt-4 inline-flex items-center gap-2 rounded-lg border bg-background px-4 py-2 text-sm font-medium text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
-          >
-            <HugeiconsIcon icon={FavouriteIcon} className="size-4" />
-            {footer.support}
-          </a>
-        </div>
-      </div>
-
-      <div className="border-t">
-        <p className="mx-auto max-w-6xl px-4 py-4 text-center text-xs text-muted-foreground">
-          © {year} {site.name}. {footer.copyright}
+    <>
+      <aside className="mx-auto w-full max-w-6xl px-4 pb-10">
+        <p className="flex items-center justify-center gap-2 rounded-lg border border-copper/40 bg-copper/5 px-4 py-3 text-center text-sm font-medium text-foreground">
+          <HugeiconsIcon icon={InformationCircleIcon} className="size-5 shrink-0 text-copper" />
+          {footer.unofficialNote}
         </p>
-      </div>
-    </footer>
+      </aside>
+
+      <footer className="border-t bg-muted/40">
+        <div className="mx-auto grid max-w-6xl gap-8 px-4 py-10 md:grid-cols-3">
+          <div className="space-y-2">
+            <p className="font-heading text-xl font-semibold">{site.name}</p>
+            <p className="text-sm leading-relaxed text-muted-foreground">{site.tagline}</p>
+          </div>
+
+          <nav aria-label={footer.linksTitle}>
+            <h2 className="mb-3 text-sm font-semibold">{footer.linksTitle}</h2>
+            <ul className="space-y-2">
+              {NAV_ORDER.map((key) => (
+                <li key={key}>
+                  <a
+                    href={NAV_URLS[key]}
+                    className="text-sm text-muted-foreground transition-colors hover:text-foreground"
+                  >
+                    {nav[key]}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </nav>
+
+          <div>
+            <h2 className="mb-3 text-sm font-semibold">{footer.socialTitle}</h2>
+            <ul className="flex gap-2">
+              {SOCIAL_ORDER.map((key) => (
+                <li key={key}>
+                  <a
+                    href={SOCIAL_URLS[key]}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={social[key]}
+                    title={social[key]}
+                    className="inline-flex size-10 items-center justify-center rounded-lg border bg-background text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+                  >
+                    <HugeiconsIcon icon={SOCIAL_ICONS[key]} className="size-5" />
+                  </a>
+                </li>
+              ))}
+            </ul>
+            <a
+              href={SUPPORT_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-4 inline-flex items-center gap-2 rounded-lg border bg-background px-4 py-2 text-sm font-medium text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+            >
+              <HugeiconsIcon icon={FavouriteIcon} className="size-4" />
+              {footer.support}
+            </a>
+          </div>
+        </div>
+
+        <div className="border-t">
+          <p className="mx-auto max-w-6xl px-4 py-4 text-center text-xs text-muted-foreground">
+            © {year} {site.name}. {footer.copyright}
+          </p>
+        </div>
+      </footer>
+    </>
   )
 }
