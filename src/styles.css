@@ -5,7 +5,7 @@
 
 @import 'tw-animate-css';
 @import 'shadcn/tailwind.css';
-@import '@fontsource-variable/reem-kufi';
+@import '@fontsource-variable/el-messiri';
 @import '@fontsource-variable/markazi-text';
 @import './components/books/book-3d.css';
 
@@ -92,8 +92,8 @@
 }
 
 @theme inline {
-  /* Kufic display face for headings and the author's name; Naskh text face for everything else. */
-  --font-heading: 'Reem Kufi Variable', 'Markazi Text Variable', serif;
+  /* El Messiri, a warm modern-classical display face, for headings and the author's name; Naskh text face for everything else. */
+  --font-heading: 'El Messiri Variable', 'Markazi Text Variable', serif;
   --font-sans: 'Markazi Text Variable', 'Noto Naskh Arabic', serif;
   /*
    * Markazi has a small x-height, so each step sits a little above Tailwind's

@@ -43,7 +43,7 @@ function Home() {
           className="size-28 shrink-0 rounded-full border border-copper/60 object-cover"
         />
         <div className="flex flex-col gap-3">
-          <h1 className="text-4xl font-semibold sm:text-5xl">{content.site.name}</h1>
+          <h1 className="text-xl font-semibold sm:text-2xl">{content.site.name}</h1>
           <p className="max-w-2xl text-lg leading-loose text-muted-foreground">
             {content.site.tagline}
           </p>
