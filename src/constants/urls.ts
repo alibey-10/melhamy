@@ -28,6 +28,9 @@ export const SOCIAL_URLS = {
 } as const
 
 /** Patreon page for supporting the site — shown as a standalone link in the footer. */
+/** Where visitors report errors or send content updates. */
+export const FEEDBACK_URL = 'https://x.com/abo_qutaiba_'
+
 export const SUPPORT_URL = 'https://www.patreon.com/moarrekh'
 
 export type NavKey = keyof typeof NAV_URLS
