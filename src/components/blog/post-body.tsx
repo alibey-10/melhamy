@@ -3,11 +3,7 @@ import { PortableText, type PortableTextComponents } from '@portabletext/react'
 import { content } from '@/content'
 import { urlFor } from '@/sanity/image'
 import type { BodyImage, BodyVideo, Post, TextBlock } from '@/sanity/posts'
-
-/** The video ID from a YouTube URL, or `null`. */
-function youtubeId(url: string) {
-  return /(?:youtu\.be\/|[?&]v=|\/embed\/|\/v\/)([\w-]{11})/.exec(url)?.[1] ?? null
-}
+import { YouTubeEmbed } from '@/components/youtube-embed'
 
 /** «[3]» → 3, for footnote references marked `sup` in the article text. */
 function footnoteNumber(text: string) {
@@ -27,22 +23,11 @@ const components: PortableTextComponents = {
         />
       </figure>
     ),
-    youtube: ({ value }: { value: BodyVideo }) => {
-      const id = youtubeId(value.url)
-      if (!id) return null
-      return (
-        <div className="my-2 aspect-video overflow-hidden rounded-xl border border-border bg-muted">
-          <iframe
-            src={`https://www.youtube-nocookie.com/embed/${id}`}
-            title={content.blog.video}
-            loading="lazy"
-            allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen"
-            allowFullScreen
-            className="size-full"
-          />
-        </div>
-      )
-    },
+    youtube: ({ value }: { value: BodyVideo }) => (
+      <div className="my-2">
+        <YouTubeEmbed url={value.url} title={content.blog.video} />
+      </div>
+    ),
   },
   block: {
     normal: ({ children }) => <p>{children}</p>,
