@@ -1,6 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router'
 
 import { NAV_URLS } from '@/constants/urls'
+import podcast from '@/content/podcast.json'
 import { absoluteUrl } from '@/lib/seo'
 import { getSitemapEntries } from '@/sanity/posts'
 
@@ -18,6 +19,7 @@ async function sitemap() {
     entry(NAV_URLS.about),
     entry(NAV_URLS.books),
     entry(NAV_URLS.blog, posts[0]?._updatedAt),
+    entry(NAV_URLS.videos, podcast.fetchedAt),
     ...books.map((b) => entry(`/books/${b.slug}`, b._updatedAt)),
     ...posts.map((p) => entry(`/blog/${p.slug}`, p._updatedAt)),
   ]

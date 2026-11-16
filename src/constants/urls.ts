@@ -17,6 +17,7 @@ export const HOME_URL = '/'
 export const NAV_URLS = {
   books: '/books',
   blog: '/blog',
+  videos: '/videos',
   about: '/about',
 } as const
 
@@ -37,7 +38,7 @@ export type NavKey = keyof typeof NAV_URLS
 export type SocialKey = keyof typeof SOCIAL_URLS
 
 /** Display order of the navigation links in the header and footer. */
-export const NAV_ORDER: readonly NavKey[] = ['books', 'blog', 'about']
+export const NAV_ORDER: readonly NavKey[] = ['books', 'blog', 'videos', 'about']
 
 /** The X account, for `twitter:site` on social cards. */
 export const X_HANDLE = '@melhamy'

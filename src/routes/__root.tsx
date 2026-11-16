@@ -9,7 +9,8 @@ import { SANITY_STUDIO_BASE_PATH } from '@/sanity/env'
 
 import appCss from '../styles.css?url'
 
-const themeScript = `try{var t=localStorage.getItem('theme');if(t==='dark'||(!t&&matchMedia('(prefers-color-scheme: dark)').matches))document.documentElement.classList.add('dark')}catch(e){}`
+/** Sets the theme before first paint, and marks JS as running so `CountUp` can hide its numbers until they animate. */
+const themeScript = `document.documentElement.classList.add('js');try{var t=localStorage.getItem('theme');if(t==='dark'||(!t&&matchMedia('(prefers-color-scheme: dark)').matches))document.documentElement.classList.add('dark')}catch(e){}`
 
 export const Route = createRootRoute({
   head: () => ({

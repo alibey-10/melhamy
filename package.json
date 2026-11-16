@@ -8,6 +8,7 @@
   "scripts": {
     "dev": "vp dev --port 3000",
     "generate-routes": "tsr generate",
+    "update-podcast": "vpx ./scripts/fetch-podcast.ts",
     "build": "vp build",
     "preview": "vp preview",
     "deploy": "bun run build && wrangler deploy",
