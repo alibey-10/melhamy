@@ -3,6 +3,7 @@ import { ClientOnly, Link, createFileRoute, notFound, useRouter } from '@tanstac
 import { HugeiconsIcon } from '@hugeicons/react'
 import { BookOpen01Icon, Download01Icon, Loading03Icon } from '@hugeicons/core-free-icons'
 
+import { YouTubeEmbed } from '@/components/youtube-embed'
 import { SanityBook3D, book3DToneAt } from '@/components/books/sanity-book-3d'
 import {
   Breadcrumb,
@@ -165,6 +166,17 @@ function BookPage() {
                 {t.aboutTitle}
               </h2>
               <p className="mt-4 text-lg leading-loose whitespace-pre-line">{book.description}</p>
+            </section>
+          ) : null}
+
+          {book.youtubeUrl ? (
+            <section aria-labelledby="video-title" className="mt-12">
+              <h2 id="video-title" className="text-xl font-bold">
+                {t.bookVideoTitle}
+              </h2>
+              <div className="mt-4">
+                <YouTubeEmbed url={book.youtubeUrl} title={`${t.bookVideoTitle} · ${book.title}`} />
+              </div>
             </section>
           ) : null}
 
