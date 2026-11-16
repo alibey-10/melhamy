@@ -9,6 +9,7 @@ import {
 } from '@hugeicons/core-free-icons'
 
 import {
+  FEEDBACK_URL,
   NAV_ORDER,
   NAV_URLS,
   SOCIAL_ORDER,
@@ -32,10 +33,23 @@ export function SiteFooter() {
   return (
     <>
       <aside className="mx-auto w-full max-w-6xl px-4 pb-10">
-        <p className="flex items-center justify-center gap-2 rounded-lg border border-copper/40 bg-copper/5 px-4 py-3 text-center text-sm font-medium text-foreground">
-          <HugeiconsIcon icon={InformationCircleIcon} className="size-5 shrink-0 text-copper" />
-          {footer.unofficialNote}
-        </p>
+        <div className="space-y-1 rounded-lg border border-copper/40 bg-copper/5 px-4 py-3 text-center">
+          <p className="flex items-center justify-center gap-2 text-sm font-medium text-foreground">
+            <HugeiconsIcon icon={InformationCircleIcon} className="size-5 shrink-0 text-copper" />
+            {footer.unofficialNote}
+          </p>
+          <p className="text-xs leading-relaxed text-muted-foreground">
+            {footer.aiNote}{' '}
+            <a
+              href={FEEDBACK_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-medium text-foreground underline decoration-copper underline-offset-4 hover:text-copper"
+            >
+              {footer.aiNoteLink}
+            </a>
+          </p>
+        </div>
       </aside>
 
       <footer className="border-t bg-muted/40">
