@@ -37,15 +37,17 @@ export type Book = BookSummary & {
   description?: string
   publishedYear?: number
   publisher?: string
+  youtubeUrl?: string
   editions: BookEdition[]
 }
 
-const BOOKS_QUERY = `*[_type == "book" && defined(slug.current) && count(editions) > 0] | order(title asc) {
+// Featured books come first, then the rest by title.
+const BOOKS_QUERY = `*[_type == "book" && defined(slug.current) && count(editions) > 0] | order(coalesce(featured, false) desc, title asc) {
   _id, title, subtitle, "slug": slug.current, cover
 }`
 
 const BOOK_QUERY = `*[_type == "book" && slug.current == $slug && count(editions) > 0][0] {
-  _id, title, subtitle, "slug": slug.current, description, cover, publishedYear, publisher,
+  _id, title, subtitle, "slug": slug.current, description, cover, publishedYear, publisher, youtubeUrl,
   editions[] { _key, language, edition, localizedTitle, translator, year,
     parts[] { _key, label, fileKey, pages, size } }
 }`

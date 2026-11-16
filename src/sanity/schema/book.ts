@@ -1,5 +1,6 @@
 import { defineArrayMember, defineField, defineType } from 'sanity'
 
+import { youtubeId } from '../../components/youtube-embed'
 import { BOOK_LANGUAGES } from '../languages'
 
 /** One PDF stored in the `melhamy-books` R2 bucket, served at `/files/<key>`. */
@@ -127,6 +128,23 @@ export const book = defineType({
       title: 'نبذة',
       type: 'text',
       rows: 4,
+    }),
+    defineField({
+      name: 'featured',
+      title: 'كتاب مميز',
+      description: 'تظهر الكتب المميزة أولًا في قائمة الكتب وفي الصفحة الرئيسية.',
+      type: 'boolean',
+      initialValue: false,
+    }),
+    defineField({
+      name: 'youtubeUrl',
+      title: 'فيديو يوتيوب',
+      description: 'رابط فيديو عن الكتاب، يظهر في صفحة الكتاب.',
+      type: 'url',
+      validation: (rule) =>
+        rule.custom((url) =>
+          !url || youtubeId(url) ? true : 'يجب أن يكون رابط فيديو يوتيوب صالحًا',
+        ),
     }),
     defineField({
       name: 'editions',
