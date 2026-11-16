@@ -1,11 +1,15 @@
 import { createFileRoute } from '@tanstack/react-router'
 
 import { BookGrid } from '@/components/books/book-grid'
+import { YouTubeEmbed } from '@/components/youtube-embed'
 import { content } from '@/content'
 import { seo } from '@/lib/seo'
 import { getBooks } from '@/sanity/books'
 
 const t = content.books
+
+/** «كم عدد مؤلفات أ. محمد إلهامي؟ ولمن أهدى كتبه؟», Tareekhuna podcast, episode 5. */
+const BOOKS_VIDEO_URL = 'https://youtu.be/t8lXgQcXGwk'
 
 export const Route = createFileRoute('/books/')({
   head: () => seo({ title: content.nav.books, description: t.description, path: '/books' }),
@@ -23,6 +27,10 @@ function BooksPage() {
       ) : (
         <BookGrid books={books} />
       )}
+
+      <div className="mt-16">
+        <YouTubeEmbed url={BOOKS_VIDEO_URL} title={t.videoTitle} />
+      </div>
     </div>
   )
 }
