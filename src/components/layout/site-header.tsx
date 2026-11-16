@@ -29,7 +29,7 @@ export function SiteHeader() {
   return (
     <header className="sticky top-0 z-40 border-b bg-background/80 backdrop-blur">
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-4 px-4">
-        <a href={HOME_URL} className="flex items-center gap-3 font-heading text-2xl font-semibold">
+        <a href={HOME_URL} aria-label={site.name} className="flex items-center">
           <img
             src="/author.webp"
             alt=""
@@ -37,7 +37,6 @@ export function SiteHeader() {
             height={40}
             className="size-10 rounded-full border border-copper/60 object-cover"
           />
-          {site.name}
         </a>
 
         <nav aria-label={header.mainNavLabel} className="hidden md:block">
