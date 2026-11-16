@@ -14,3 +14,21 @@ const dateFormat = new Intl.DateTimeFormat('ar-u-nu-latn', { dateStyle: 'long' }
 export function formatDate(iso: string) {
   return dateFormat.format(new Date(iso))
 }
+
+const compactFormat = new Intl.NumberFormat('ar-u-nu-latn', {
+  notation: 'compact',
+  maximumFractionDigits: 0,
+})
+
+/** A rounded count like "15 مليون" or "242 ألف", with Western digits. */
+export function formatCompact(n: number) {
+  return compactFormat.format(Math.round(n))
+}
+
+/** A video length like "1:12:40", isolated left-to-right so it reads correctly in Arabic text. */
+export function formatDuration(seconds: number) {
+  const h = Math.floor(seconds / 3600)
+  const m = Math.floor((seconds % 3600) / 60)
+  const s = String(seconds % 60).padStart(2, '0')
+  return `⁦${h ? `${h}:${String(m).padStart(2, '0')}` : m}:${s}⁩`
+}

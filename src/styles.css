@@ -181,3 +181,8 @@
     font-family: var(--font-heading);
   }
 }
+
+/* `CountUp` numbers stay hidden until they start counting, so the server-rendered total doesn't flash first. */
+.js [data-count-up]:not([data-ready]) {
+  visibility: hidden;
+}
