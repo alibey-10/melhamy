@@ -32,8 +32,7 @@ function VideosPage() {
   return (
     <div className="mx-auto max-w-6xl px-4 py-12">
       <header>
-        <h1 className="text-4xl font-semibold">{t.title}</h1>
-        <h2 className="mt-6 text-2xl font-semibold text-primary sm:text-3xl">{t.seriesTitle}</h2>
+        <h1 className="text-3xl font-semibold text-primary sm:text-4xl">{t.seriesTitle}</h1>
         <p className="mt-3 max-w-3xl text-lg leading-relaxed text-muted-foreground sm:text-xl">
           {t.seriesIntro}
         </p>
