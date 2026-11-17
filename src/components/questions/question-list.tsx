@@ -3,7 +3,7 @@ import { HugeiconsIcon } from '@hugeicons/react'
 import { ArrowLeft01Icon } from '@hugeicons/core-free-icons'
 
 import { content } from '@/content'
-import { fill, formatDuration } from '@/lib/format'
+import { fill } from '@/lib/format'
 import { QUESTIONS } from '@/lib/podcast-questions'
 
 const t = content.questions
@@ -26,11 +26,8 @@ export function QuestionList() {
               {q.number}
             </span>
             <span className="flex min-w-0 flex-1 flex-col gap-2">
-              <span className="text-sm text-muted-foreground">
-                <span className="sr-only">{fill(t.questionLabel, { number: q.number })} · </span>
-                {fill(t.questionMeta, { episode: q.episode, time: formatDuration(q.start) })}
-              </span>
               <span className="text-xl leading-snug font-semibold group-hover:text-primary sm:text-2xl sm:leading-snug">
+                <span className="sr-only">{fill(t.questionLabel, { number: q.number })}: </span>
                 {q.question}
               </span>
               <span className="line-clamp-2 text-lg leading-relaxed text-muted-foreground">

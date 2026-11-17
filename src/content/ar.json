@@ -176,7 +176,6 @@
     "watchSeries": "شاهد الحلقات",
     "questionsCount": "{count} من 100 سؤال",
     "questionLabel": "السؤال {number}",
-    "questionMeta": "الحلقة {episode} · من الدقيقة {time}",
     "questionAxis": "محور: {axis}",
     "readAnswer": "اقرأ الإجابة",
     "shortAnswer": "الإجابة باختصار",

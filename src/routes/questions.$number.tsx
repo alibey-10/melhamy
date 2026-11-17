@@ -15,7 +15,7 @@ import {
 } from '@/components/ui/breadcrumb'
 import { NAV_URLS, questionPath } from '@/constants/urls'
 import { content } from '@/content'
-import { fill, formatDuration } from '@/lib/format'
+import { fill } from '@/lib/format'
 import type { Question, QuestionLink } from '@/lib/podcast-questions'
 import { PERSON_ID, WEBSITE_ID, absoluteUrl, breadcrumbLd, seo } from '@/lib/seo'
 
@@ -105,10 +105,6 @@ function QuestionPage() {
           <h1 className="text-3xl leading-snug font-bold sm:text-4xl sm:leading-snug">
             {q.question}
           </h1>
-          <p className="text-sm text-muted-foreground">
-            {content.videos.seriesTitle} ·{' '}
-            {fill(t.questionMeta, { episode: q.episode, time: formatDuration(q.start) })}
-          </p>
         </header>
 
         <section aria-labelledby="short-answer" className="mt-8">
