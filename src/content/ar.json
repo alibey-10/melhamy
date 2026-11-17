@@ -93,7 +93,11 @@
     "searchPlaceholder": "ابحث في المقالات…",
     "clearSearch": "مسح البحث",
     "noResults": "لا توجد مقالات تطابق بحثك",
-    "resultCount": "عدد النتائج: {count}"
+    "resultCount": "عدد النتائج: {count}",
+    "categoriesLabel": "تصنيفات المقالات",
+    "allCategories": "الكل",
+    "categoryPageTitle": "{category}، الصفحة {page}",
+    "categoryDescription": "مقالات المؤرخ محمد إلهامي في تصنيف «{category}»."
   },
   "about": {
     "title": "السيرة الذاتية",

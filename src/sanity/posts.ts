@@ -46,8 +46,10 @@ export type Post = PostSummary & {
   image?: BodyImage
 }
 
-// With search terms, only articles matching every word (each as a prefix).
+// With search terms, only articles matching every word (each as a prefix);
+// with a category, only articles in it.
 const LIST_FILTER = `_type == "post" && defined(slug.current)
+  && (!defined($category) || $category in categories)
   && (!defined($terms) || [title, excerpt, categories, pt::text(body)] match $terms)`
 
 const POSTS_QUERY = `{
@@ -78,21 +80,25 @@ export type PostsInput = {
   page: number
   /** Only articles matching these words; omit for all of them. */
   query?: string
+  /** Only articles in this category; omit for all of them. */
+  category?: string
 }
 
 /**
  * One page of articles, newest first, with the total count, optionally only
- * those matching a search. Runs on the server.
+ * those matching a search and in a category. Runs on the server.
  */
 export const getPosts = createServerFn({ method: 'GET' })
   .validator((input: PostsInput) => ({
     page: Math.max(1, Math.floor(Number(input.page) || 1)),
     query: typeof input.query === 'string' ? input.query : '',
+    category: typeof input.category === 'string' ? input.category.trim() : '',
   }))
-  .handler(({ data: { page, query } }) => {
+  .handler(({ data: { page, query, category } }) => {
     const words = toWords(query)
     return sanityClient.fetch<{ posts: PostSummary[]; total: number }>(POSTS_QUERY, {
       terms: words.length ? words.map((word) => `${word}*`) : null,
+      category: category || null,
       start: (page - 1) * POSTS_PER_PAGE,
       end: page * POSTS_PER_PAGE,
     })
@@ -123,3 +129,21 @@ const STATS_QUERY = `{
 export const getPostStats = createServerFn({ method: 'GET' }).handler(() =>
   sanityClient.fetch<{ total: number; since: string | null }>(STATS_QUERY),
 )
+
+/** A category and how many articles carry it. */
+export type CategoryCount = { name: string; count: number }
+
+const CATEGORIES_QUERY = `*[_type == "post" && defined(slug.current)].categories[]`
+
+/** Every article category with its article count, most used first. Runs on the server. */
+export const getCategories = createServerFn({ method: 'GET' }).handler(async () => {
+  const names = await sanityClient.fetch<(string | null)[]>(CATEGORIES_QUERY)
+  const counts = new Map<string, number>()
+  for (const name of names) {
+    const trimmed = name?.trim()
+    if (trimmed) counts.set(trimmed, (counts.get(trimmed) ?? 0) + 1)
+  }
+  return [...counts]
+    .map(([name, count]): CategoryCount => ({ name, count }))
+    .sort((a, b) => b.count - a.count || a.name.localeCompare(b.name, 'ar'))
+})

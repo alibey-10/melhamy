@@ -1,5 +1,6 @@
 import { Link, createFileRoute, notFound } from '@tanstack/react-router'
 
+import { CategoryLinks } from '@/components/blog/category-chips'
 import { PostBody, PostFootnotes } from '@/components/blog/post-body'
 import {
   Breadcrumb,
@@ -96,13 +97,8 @@ function PostPage() {
             <span>{content.site.name}</span>
             <span aria-hidden>·</span>
             <time dateTime={post.publishedAt}>{formatDate(post.publishedAt)}</time>
-            {post.categories?.length ? (
-              <>
-                <span aria-hidden>·</span>
-                <span>{post.categories.join('، ')}</span>
-              </>
-            ) : null}
           </p>
+          {post.categories?.length ? <CategoryLinks categories={post.categories} /> : null}
         </header>
 
         <div className="mt-8">
