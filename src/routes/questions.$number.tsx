@@ -16,14 +16,19 @@ import {
 import { NAV_URLS } from '@/constants/urls'
 import { content } from '@/content'
 import { fill, formatDuration } from '@/lib/format'
-import { findQuestion, questionPath, type Question } from '@/lib/podcast-questions'
+import {
+  findQuestion,
+  questionPath,
+  type Question,
+  type QuestionSummary,
+} from '@/lib/podcast-questions'
 import { PERSON_ID, absoluteUrl, breadcrumbLd, seo } from '@/lib/seo'
 
 const t = content.questions
 
 export const Route = createFileRoute('/questions/$number')({
-  loader: ({ params }) => {
-    const found = /^\d+$/.test(params.number) ? findQuestion(Number(params.number)) : null
+  loader: async ({ params }) => {
+    const found = /^\d+$/.test(params.number) ? await findQuestion(Number(params.number)) : null
     if (!found) throw notFound()
     return found
   },
@@ -199,22 +204,6 @@ function QuestionPage() {
               </ul>
             </>
           ) : null}
-
-          {q.people.length ? (
-            <>
-              <h3 className="mt-6 text-lg font-semibold text-primary">{t.people}</h3>
-              <ul className="mt-2 flex flex-wrap gap-2">
-                {q.people.map((p) => (
-                  <li
-                    key={p}
-                    className="rounded-full border border-border bg-card px-3 py-0.5 text-base"
-                  >
-                    {p}
-                  </li>
-                ))}
-              </ul>
-            </>
-          ) : null}
         </section>
 
         <p className="mt-12 text-sm text-muted-foreground">{t.sourceNote}</p>
@@ -242,7 +231,7 @@ function QuestionPage() {
 }
 
 /** A link to the previous or next question; in RTL the previous one sits on the right. */
-function Neighbour({ q, direction }: { q: Question; direction: 'prev' | 'next' }) {
+function Neighbour({ q, direction }: { q: QuestionSummary; direction: 'prev' | 'next' }) {
   const isNext = direction === 'next'
   return (
     <Link
