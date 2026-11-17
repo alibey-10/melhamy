@@ -1,6 +1,6 @@
 import { defineArrayMember, defineField, defineType } from 'sanity'
 
-import { youtubeId } from '../../components/youtube-embed'
+import { isYouTubeUrl } from '../../components/youtube-embed'
 import { BOOK_LANGUAGES } from '../languages'
 
 /** One PDF stored in the `melhamy-books` R2 bucket, served at `/files/<key>`. */
@@ -139,11 +139,11 @@ export const book = defineType({
     defineField({
       name: 'youtubeUrl',
       title: 'فيديو يوتيوب',
-      description: 'رابط فيديو عن الكتاب، يظهر في صفحة الكتاب.',
+      description: 'رابط فيديو أو قائمة تشغيل عن الكتاب، يظهر في صفحة الكتاب.',
       type: 'url',
       validation: (rule) =>
         rule.custom((url) =>
-          !url || youtubeId(url) ? true : 'يجب أن يكون رابط فيديو يوتيوب صالحًا',
+          !url || isYouTubeUrl(url) ? true : 'يجب أن يكون رابط فيديو أو قائمة تشغيل يوتيوب صالحًا',
         ),
     }),
     defineField({
