@@ -1,6 +1,6 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { Link, createFileRoute } from '@tanstack/react-router'
 import { HugeiconsIcon } from '@hugeicons/react'
-import { YoutubeIcon } from '@hugeicons/core-free-icons'
+import { BookOpen01Icon, YoutubeIcon } from '@hugeicons/core-free-icons'
 
 import { EpisodeBrowser } from '@/components/videos/episode-browser'
 import { PodcastComments } from '@/components/videos/podcast-comments'
@@ -12,7 +12,7 @@ import { breadcrumbLd, seo } from '@/lib/seo'
 
 const t = content.videos
 
-export const Route = createFileRoute('/videos')({
+export const Route = createFileRoute('/videos/')({
   head: () =>
     seo({
       title: t.title,
@@ -45,6 +45,13 @@ function VideosPage() {
           <HugeiconsIcon icon={YoutubeIcon} className="size-5" aria-hidden />
           {t.playlist}
         </a>
+        <Link
+          to="/questions"
+          className="ms-6 mt-4 inline-flex items-center gap-2 font-medium text-primary hover:underline"
+        >
+          <HugeiconsIcon icon={BookOpen01Icon} className="size-5" aria-hidden />
+          {t.readQuestions}
+        </Link>
       </header>
 
       <PodcastStats />

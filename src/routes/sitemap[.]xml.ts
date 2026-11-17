@@ -2,6 +2,7 @@ import { createFileRoute } from '@tanstack/react-router'
 
 import { NAV_URLS } from '@/constants/urls'
 import podcast from '@/content/podcast.json'
+import { QUESTIONS, questionPath } from '@/lib/podcast-questions'
 import { absoluteUrl } from '@/lib/seo'
 import { getSitemapEntries } from '@/sanity/posts'
 
@@ -11,7 +12,7 @@ function entry(path: string, lastmod?: string) {
   return `<url><loc>${absoluteUrl(path)}</loc>${date}</url>`
 }
 
-/** Every indexable page: the section pages, then each book and article. */
+/** Every indexable page: the section pages, the podcast questions, then each book and article. */
 async function sitemap() {
   const { posts, books } = await getSitemapEntries()
   const urls = [
@@ -20,6 +21,8 @@ async function sitemap() {
     entry(NAV_URLS.books),
     entry(NAV_URLS.blog, posts[0]?._updatedAt),
     entry(NAV_URLS.videos, podcast.fetchedAt),
+    entry(NAV_URLS.questions),
+    ...QUESTIONS.map((q) => entry(questionPath(q.number))),
     ...books.map((b) => entry(`/books/${b.slug}`, b._updatedAt)),
     ...posts.map((p) => entry(`/blog/${p.slug}`, p._updatedAt)),
   ]
