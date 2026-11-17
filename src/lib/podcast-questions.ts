@@ -1,5 +1,7 @@
 import index from '@/content/questions/index.json'
 
+export { questionPath } from '@/constants/urls'
+
 /**
  * The series' questions, written up from the episode transcripts. Each question lives in
  * its own file, `src/content/questions/NNN.json`, and `index.json` lists every question
@@ -34,18 +36,25 @@ const files = import.meta.glob<Question>('/src/content/questions/[0-9][0-9][0-9]
   import: 'default',
 })
 
-export function questionPath(number: number) {
-  return `/questions/${number}`
-}
-
 export function questionFile(number: number) {
   return `/src/content/questions/${String(number).padStart(3, '0')}.json`
 }
 
-/** The question with this number, plus its neighbours for the previous/next links. */
+/** Just what the previous/next links show, to keep the page's hydration data small. */
+export type QuestionLink = Pick<QuestionSummary, 'number' | 'question'>
+
+function link(q: QuestionSummary | undefined): QuestionLink | undefined {
+  return q && { number: q.number, question: q.question }
+}
+
+/**
+ * The question with this number, plus its neighbours for the previous/next links.
+ * Import this module dynamically from a route loader: loaders are in the app's entry
+ * chunk, so a static import would ship `index.json` on every page of the site.
+ */
 export async function findQuestion(number: number) {
   const i = QUESTIONS.findIndex((q) => q.number === number)
   const load = files[questionFile(number)]
   if (i === -1 || !load) return null
-  return { question: await load(), prev: QUESTIONS[i - 1], next: QUESTIONS[i + 1] }
+  return { question: await load(), prev: link(QUESTIONS[i - 1]), next: link(QUESTIONS[i + 1]) }
 }

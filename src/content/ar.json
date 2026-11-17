@@ -150,6 +150,7 @@
     "sortViews": "الأكثر مشاهدة",
     "episodeViews": "{count} مشاهدة",
     "play": "تشغيل الحلقة {number}",
+    "playVideo": "تشغيل: {title}",
     "showMore": "عرض المزيد ({shown} من {total})",
     "readQuestions": "اقرأ الإجابات مكتوبةً"
   },

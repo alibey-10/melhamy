@@ -13,22 +13,20 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from '@/components/ui/breadcrumb'
-import { NAV_URLS } from '@/constants/urls'
+import { NAV_URLS, questionPath } from '@/constants/urls'
 import { content } from '@/content'
 import { fill, formatDuration } from '@/lib/format'
-import {
-  findQuestion,
-  questionPath,
-  type Question,
-  type QuestionSummary,
-} from '@/lib/podcast-questions'
-import { PERSON_ID, absoluteUrl, breadcrumbLd, seo } from '@/lib/seo'
+import type { Question, QuestionLink } from '@/lib/podcast-questions'
+import { PERSON_ID, WEBSITE_ID, absoluteUrl, breadcrumbLd, seo } from '@/lib/seo'
 
 const t = content.questions
 
 export const Route = createFileRoute('/questions/$number')({
   loader: async ({ params }) => {
-    const found = /^\d+$/.test(params.number) ? await findQuestion(Number(params.number)) : null
+    if (!/^\d+$/.test(params.number)) throw notFound()
+    // Imported here, not at the top, so the question index stays out of the entry chunk.
+    const { findQuestion } = await import('@/lib/podcast-questions')
+    const found = await findQuestion(Number(params.number))
     if (!found) throw notFound()
     return found
   },
@@ -36,37 +34,35 @@ export const Route = createFileRoute('/questions/$number')({
   component: QuestionPage,
 })
 
-/** Title, description, the episode's thumbnail as the social card, and FAQ structured data. */
+/**
+ * Title, description, the episode's thumbnail as the social card, and Article structured
+ * data. Not QAPage, which Google reserves for forums where visitors post answers, nor
+ * FAQPage, which is for a list of questions: this is one written-up answer by the author.
+ */
 function questionSeo(q: Question) {
   const path = questionPath(q.number)
   const label = fill(t.questionLabel, { number: q.number })
+  // `hqdefault` exists for every video; `maxresdefault` is missing for some episodes.
+  const image = `https://i.ytimg.com/vi/${q.videoId}/hqdefault.jpg`
   return seo({
-    title: `${q.question} | ${t.title}`,
+    title: q.question,
     description: q.summary,
     path,
     type: 'article',
-    image: {
-      url: `https://i.ytimg.com/vi/${q.videoId}/maxresdefault.jpg`,
-      width: 1280,
-      height: 720,
-      alt: q.question,
-    },
+    image: { url: image, width: 480, height: 360, alt: q.question },
     jsonLd: [
       {
-        '@type': 'QAPage',
+        '@type': 'Article',
+        headline: q.question,
+        description: q.summary,
         url: absoluteUrl(path),
+        mainEntityOfPage: absoluteUrl(path),
         inLanguage: 'ar',
-        mainEntity: {
-          '@type': 'Question',
-          name: q.question,
-          answerCount: 1,
-          acceptedAnswer: {
-            '@type': 'Answer',
-            text: q.summary,
-            url: absoluteUrl(path),
-            author: { '@id': PERSON_ID, '@type': 'Person', name: content.site.name },
-          },
-        },
+        image,
+        articleSection: t.title,
+        author: { '@id': PERSON_ID, '@type': 'Person', name: content.site.name },
+        publisher: { '@id': PERSON_ID },
+        isPartOf: { '@id': WEBSITE_ID },
       },
       breadcrumbLd([
         [content.breadcrumb.home, '/'],
@@ -132,6 +128,7 @@ function QuestionPage() {
             url={`https://youtu.be/${q.videoId}`}
             title={`${label}: ${q.question}`}
             start={q.start}
+            facade
           />
         </section>
 
@@ -231,7 +228,7 @@ function QuestionPage() {
 }
 
 /** A link to the previous or next question; in RTL the previous one sits on the right. */
-function Neighbour({ q, direction }: { q: QuestionSummary; direction: 'prev' | 'next' }) {
+function Neighbour({ q, direction }: { q: QuestionLink; direction: 'prev' | 'next' }) {
   const isNext = direction === 'next'
   return (
     <Link

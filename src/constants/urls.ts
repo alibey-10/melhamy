@@ -22,6 +22,11 @@ export const NAV_URLS = {
   about: '/about',
 } as const
 
+/** One podcast question's page. */
+export function questionPath(number: number) {
+  return `${NAV_URLS.questions}/${number}`
+}
+
 export const SOCIAL_URLS = {
   youtube: 'https://www.youtube.com/@melhamy',
   telegram: 'https://web.telegram.org/a/#-1001002613976',

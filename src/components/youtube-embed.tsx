@@ -1,3 +1,10 @@
+import { useState } from 'react'
+import { HugeiconsIcon } from '@hugeicons/react'
+import { PlayIcon } from '@hugeicons/core-free-icons'
+
+import { content } from '@/content'
+import { fill } from '@/lib/format'
+
 /** The video ID from a YouTube URL, or `null`. */
 export function youtubeId(url: string) {
   return /(?:youtu\.be\/|[?&]v=|\/embed\/|\/v\/)([\w-]{11})/.exec(url)?.[1] ?? null
@@ -35,30 +42,58 @@ function youtubeEmbedSrc(url: string, autoplay = false, start?: number) {
  * Renders nothing for a non-YouTube URL.
  * `autoplay` starts the video at once; use it only after the visitor picked a video.
  * `start` is where the video begins, in seconds.
+ * `facade` shows the video's thumbnail and loads YouTube's player only when it is clicked,
+ * for pages where the video is not the main content. It applies to single videos only.
  */
 export function YouTubeEmbed({
   url,
   title,
   autoplay = false,
   start,
+  facade = false,
 }: {
   url: string
   title: string
   autoplay?: boolean
   start?: number
+  facade?: boolean
 }) {
-  const src = youtubeEmbedSrc(url, autoplay, start)
+  const [clicked, setClicked] = useState(false)
+  const id = youtubeId(url)
+  const poster = facade && !clicked && id && !youtubePlaylistId(url)
+  const src = youtubeEmbedSrc(url, autoplay || clicked, start)
   if (!src) return null
   return (
     <div className="aspect-video overflow-hidden rounded-xl border border-border bg-muted">
-      <iframe
-        src={src}
-        title={title}
-        loading="lazy"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen"
-        allowFullScreen
-        className="size-full"
-      />
+      {poster ? (
+        <button
+          type="button"
+          onClick={() => setClicked(true)}
+          aria-label={fill(content.videos.playVideo, { title })}
+          className="group relative block size-full"
+        >
+          <img
+            src={`https://i.ytimg.com/vi/${id}/hqdefault.jpg`}
+            alt=""
+            width={480}
+            height={360}
+            loading="lazy"
+            className="size-full object-cover"
+          />
+          <span className="absolute inset-0 m-auto flex size-16 items-center justify-center rounded-full bg-black/70 text-white transition-colors group-hover:bg-primary">
+            <HugeiconsIcon icon={PlayIcon} className="size-8" aria-hidden />
+          </span>
+        </button>
+      ) : (
+        <iframe
+          src={src}
+          title={title}
+          loading="lazy"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen"
+          allowFullScreen
+          className="size-full"
+        />
+      )}
     </div>
   )
 }

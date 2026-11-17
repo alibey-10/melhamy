@@ -1,4 +1,4 @@
-/** Text with `**bold**` spans, as written in `src/content/podcast-questions.json`. */
+/** Text with `**bold**` spans, as written in the question files, `src/content/questions/NNN.json`. */
 export function RichText({ text }: { text: string }) {
   return text.split(/\*\*(.+?)\*\*/g).map((part, i) =>
     i % 2 ? (
