@@ -6,7 +6,7 @@ import type { BookSummary } from '@/sanity/books'
 /** Books as 3D volumes with printed covers in a grid, each linking to its book page. */
 export function BookGrid({
   books,
-  columns = 'grid-cols-2 sm:grid-cols-3 md:grid-cols-4',
+  columns = 'grid-cols-2 sm:grid-cols-3',
 }: {
   books: BookSummary[]
   /** Column classes, for grids narrower than the page. */
