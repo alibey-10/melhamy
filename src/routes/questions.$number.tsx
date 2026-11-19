@@ -101,7 +101,7 @@ function QuestionPage() {
         </Breadcrumb>
 
         <article className="mt-8">
-          <header className="flex flex-col gap-3 border-b border-border pb-8">
+          <header className="flex flex-col gap-2 border-b border-border pb-6">
             <p className="flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-muted-foreground">
               <span className="font-semibold text-copper">{label}</span>
               <span aria-hidden>·</span>
@@ -113,9 +113,7 @@ function QuestionPage() {
                 {fill(t.questionAxis, { axis: q.axis })}
               </Link>
             </p>
-            <h1 className="text-3xl leading-snug font-bold sm:text-4xl sm:leading-snug">
-              {q.question}
-            </h1>
+            <h1 className="text-xl leading-snug font-bold sm:text-2xl">{q.question}</h1>
           </header>
 
           <section aria-labelledby="short-answer" className="mt-8">

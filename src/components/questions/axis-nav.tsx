@@ -174,7 +174,7 @@ function AxisQuestions({ axis, onNavigate }: { axis: number; onNavigate?: () => 
             <span aria-hidden className="w-5 shrink-0 text-copper tabular-nums">
               {q.number}
             </span>
-            <span className="line-clamp-2 min-w-0">
+            <span className="line-clamp-1 min-w-0">
               <span className="sr-only">{fill(t.questionLabel, { number: q.number })}: </span>
               {q.question}
             </span>
