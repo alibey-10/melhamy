@@ -22,12 +22,13 @@ const writtenAxes = new Set(QUESTIONS.map((q) => axisOf(q.number)))
 
 /**
  * The ten axes: a sticky sidebar on wide screens, a bottom sheet opened from a bar under
- * the header on narrow ones. `current` is the axis to highlight; with `spy`, it follows
- * the axis section being read on the `/questions` page instead.
+ * the header on narrow ones. On a question page, pass `question`: its axis is highlighted
+ * and lists its questions. With `spy`, the highlight follows the axis section being read
+ * on the `/questions` page instead.
  */
-export function AxisNav({ current, spy = false }: { current?: number; spy?: boolean }) {
+export function AxisNav({ question, spy = false }: { question?: number; spy?: boolean }) {
   const spied = useVisibleAxis(spy)
-  const active = spy ? spied : current
+  const active = spy ? spied : question && axisOf(question)
   const [open, setOpen] = React.useState(false)
   const activeAxis = AXES.find((a) => a.number === active)
 
@@ -39,7 +40,7 @@ export function AxisNav({ current, spy = false }: { current?: number; spy?: bool
           className="sticky top-24 max-h-[calc(100dvh-7rem)] overflow-y-auto pb-4"
         >
           <h2 className="mb-3 font-heading text-lg font-semibold text-primary">{t.axesTitle}</h2>
-          <AxisList active={active} onListPage={spy} />
+          <AxisList active={active} showQuestions={!spy} onListPage={spy} />
         </nav>
       </aside>
 
@@ -64,7 +65,10 @@ export function AxisNav({ current, spy = false }: { current?: number; spy?: bool
             />
           </DrawerTrigger>
           <DrawerBackdrop className="bg-black/40" />
-          <DrawerContent className="flex max-h-[85dvh] w-full flex-col rounded-t-2xl border-t border-border bg-card text-card-foreground shadow-lg outline-none after:absolute after:inset-x-0 after:top-full after:h-screen after:bg-card">
+          <DrawerContent
+            initialFocus="content"
+            className="flex max-h-[85dvh] w-full flex-col rounded-t-2xl border-t border-border bg-card text-card-foreground shadow-lg outline-none after:absolute after:inset-x-0 after:top-full after:h-screen after:bg-card"
+          >
             <div aria-hidden className="mx-auto mt-3 h-1.5 w-12 shrink-0 rounded-full bg-border" />
             <DrawerTitle className="px-5 pt-4 pb-2 font-heading text-lg font-semibold text-primary">
               {t.axesTitle}
@@ -73,7 +77,12 @@ export function AxisNav({ current, spy = false }: { current?: number; spy?: bool
               aria-label={t.axesTitle}
               className="min-h-0 flex-1 overflow-y-auto px-3 pb-[max(1.5rem,env(safe-area-inset-bottom))]"
             >
-              <AxisList active={active} onListPage={spy} onNavigate={() => setOpen(false)} />
+              <AxisList
+                active={active}
+                showQuestions={!spy}
+                onListPage={spy}
+                onNavigate={() => setOpen(false)}
+              />
             </nav>
           </DrawerContent>
         </Drawer>
@@ -84,10 +93,12 @@ export function AxisNav({ current, spy = false }: { current?: number; spy?: bool
 
 function AxisList({
   active,
+  showQuestions,
   onListPage,
   onNavigate,
 }: {
   active?: number
+  showQuestions: boolean
   onListPage: boolean
   onNavigate?: () => void
 }) {
@@ -120,10 +131,7 @@ function AxisList({
 
         if (!writtenAxes.has(axis.number)) {
           return (
-            <li
-              key={axis.number}
-              className="flex gap-2 rounded-lg border-s-2 border-transparent px-3 py-2 text-muted-foreground"
-            >
+            <li key={axis.number} className="flex gap-2 rounded-lg px-3 py-2 text-muted-foreground">
               {body}
             </li>
           )
@@ -133,10 +141,8 @@ function AxisList({
           'aria-current': isActive ? ('location' as const) : undefined,
           onClick: onNavigate,
           className: cn(
-            'flex gap-2 rounded-lg border-s-2 px-3 py-2 outline-none hover:bg-muted focus-visible:ring-3 focus-visible:ring-ring/50',
-            isActive
-              ? 'border-primary bg-primary/8 font-semibold text-primary'
-              : 'border-transparent',
+            'flex gap-2 rounded-lg px-3 py-2 outline-none hover:bg-muted focus-visible:ring-3 focus-visible:ring-ring/50',
+            isActive && 'bg-primary/8 font-semibold text-primary',
           ),
           children: body,
         }
@@ -155,9 +161,37 @@ function AxisList({
                 {...props}
               />
             )}
+            {isActive && showQuestions ? (
+              <AxisQuestions axis={axis.number} onNavigate={onNavigate} />
+            ) : null}
           </li>
         )
       })}
+    </ol>
+  )
+}
+
+function AxisQuestions({ axis, onNavigate }: { axis: number; onNavigate?: () => void }) {
+  return (
+    <ol className="mt-1 mb-2 flex flex-col gap-0.5 ps-8">
+      {QUESTIONS.filter((q) => axisOf(q.number) === axis).map((q) => (
+        <li key={q.number}>
+          <Link
+            to="/questions/$number"
+            params={{ number: String(q.number) }}
+            onClick={onNavigate}
+            className="flex gap-2 rounded-lg px-2 py-1.5 text-sm leading-snug text-muted-foreground outline-none hover:bg-muted hover:text-foreground focus-visible:ring-3 focus-visible:ring-ring/50 data-[status=active]:bg-muted data-[status=active]:font-semibold data-[status=active]:text-foreground"
+          >
+            <span aria-hidden className="w-5 shrink-0 text-copper tabular-nums">
+              {q.number}
+            </span>
+            <span className="line-clamp-2 min-w-0">
+              <span className="sr-only">{fill(t.questionLabel, { number: q.number })}: </span>
+              {q.question}
+            </span>
+          </Link>
+        </li>
+      ))}
     </ol>
   )
 }

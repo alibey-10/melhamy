@@ -82,7 +82,7 @@ function QuestionPage() {
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-12 lg:grid lg:grid-cols-[16rem_minmax(0,1fr)] lg:gap-12">
-      <AxisNav current={axis} />
+      <AxisNav question={q.number} />
       <div className="max-w-3xl min-w-0">
         <Breadcrumb aria-label={content.breadcrumb.label}>
           <BreadcrumbList>
