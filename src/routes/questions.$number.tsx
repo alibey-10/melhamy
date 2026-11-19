@@ -4,6 +4,7 @@ import { HugeiconsIcon } from '@hugeicons/react'
 import { ArrowLeft01Icon, ArrowRight01Icon } from '@hugeicons/core-free-icons'
 
 import { YouTubeEmbed } from '@/components/youtube-embed'
+import { AxisNav } from '@/components/questions/axis-nav'
 import { RichText } from '@/components/questions/rich-text'
 import {
   Breadcrumb,
@@ -16,6 +17,7 @@ import {
 import { NAV_URLS, questionPath } from '@/constants/urls'
 import { content } from '@/content'
 import { fill } from '@/lib/format'
+import { axisAnchor, axisOf } from '@/lib/question-axes'
 import type { Question, QuestionLink } from '@/lib/podcast-questions'
 import { PERSON_ID, WEBSITE_ID, absoluteUrl, breadcrumbLd, seo } from '@/lib/seo'
 
@@ -76,149 +78,159 @@ function questionSeo(q: Question) {
 function QuestionPage() {
   const { question: q, prev, next } = Route.useLoaderData()
   const label = fill(t.questionLabel, { number: q.number })
+  const axis = axisOf(q.number)
 
   return (
-    <div className="mx-auto max-w-3xl px-4 py-12">
-      <Breadcrumb aria-label={content.breadcrumb.label}>
-        <BreadcrumbList>
-          <BreadcrumbItem>
-            <BreadcrumbLink render={<Link to="/" />}>{content.breadcrumb.home}</BreadcrumbLink>
-          </BreadcrumbItem>
-          <BreadcrumbSeparator />
-          <BreadcrumbItem>
-            <BreadcrumbLink render={<Link to="/questions" />}>{t.title}</BreadcrumbLink>
-          </BreadcrumbItem>
-          <BreadcrumbSeparator />
-          <BreadcrumbItem>
-            <BreadcrumbPage>{label}</BreadcrumbPage>
-          </BreadcrumbItem>
-        </BreadcrumbList>
-      </Breadcrumb>
+    <div className="mx-auto max-w-6xl px-4 py-12 lg:grid lg:grid-cols-[16rem_minmax(0,1fr)] lg:gap-12">
+      <AxisNav question={q.number} />
+      <div className="max-w-3xl min-w-0">
+        <Breadcrumb aria-label={content.breadcrumb.label}>
+          <BreadcrumbList>
+            <BreadcrumbItem>
+              <BreadcrumbLink render={<Link to="/" />}>{content.breadcrumb.home}</BreadcrumbLink>
+            </BreadcrumbItem>
+            <BreadcrumbSeparator />
+            <BreadcrumbItem>
+              <BreadcrumbLink render={<Link to="/questions" />}>{t.title}</BreadcrumbLink>
+            </BreadcrumbItem>
+            <BreadcrumbSeparator />
+            <BreadcrumbItem>
+              <BreadcrumbPage>{label}</BreadcrumbPage>
+            </BreadcrumbItem>
+          </BreadcrumbList>
+        </Breadcrumb>
 
-      <article className="mt-8">
-        <header className="flex flex-col gap-3 border-b border-border pb-8">
-          <p className="flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-muted-foreground">
-            <span className="font-semibold text-copper">{label}</span>
-            <span aria-hidden>·</span>
-            <span>{fill(t.questionAxis, { axis: q.axis })}</span>
-          </p>
-          <h1 className="text-3xl leading-snug font-bold sm:text-4xl sm:leading-snug">
-            {q.question}
-          </h1>
-        </header>
+        <article className="mt-8">
+          <header className="flex flex-col gap-2 border-b border-border pb-6">
+            <p className="flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-muted-foreground">
+              <span className="font-semibold text-copper">{label}</span>
+              <span aria-hidden>·</span>
+              <Link
+                to="/questions"
+                hash={axisAnchor(axis)}
+                className="hover:text-primary hover:underline"
+              >
+                {fill(t.questionAxis, { axis: q.axis })}
+              </Link>
+            </p>
+            <h1 className="text-xl leading-snug font-bold sm:text-2xl">{q.question}</h1>
+          </header>
 
-        <section aria-labelledby="short-answer" className="mt-8">
-          <h2 id="short-answer" className="sr-only">
-            {t.shortAnswer}
-          </h2>
-          <p className="border-s-2 border-copper/60 ps-5 text-xl leading-relaxed sm:text-2xl sm:leading-relaxed">
-            {q.summary}
-          </p>
-        </section>
+          <section aria-labelledby="short-answer" className="mt-8">
+            <h2 id="short-answer" className="sr-only">
+              {t.shortAnswer}
+            </h2>
+            <p className="border-s-2 border-copper/60 ps-5 text-xl leading-relaxed sm:text-2xl sm:leading-relaxed">
+              {q.summary}
+            </p>
+          </section>
 
-        <section aria-labelledby="watch" className="mt-10">
-          <h2 id="watch" className="mb-3 text-lg font-semibold">
-            {t.watchAnswer}
-          </h2>
-          <YouTubeEmbed
-            url={`https://youtu.be/${q.videoId}`}
-            title={`${label}: ${q.question}`}
-            start={q.start}
-            facade
-          />
-        </section>
+          <section aria-labelledby="watch" className="mt-10">
+            <h2 id="watch" className="mb-3 text-lg font-semibold">
+              {t.watchAnswer}
+            </h2>
+            <YouTubeEmbed
+              url={`https://youtu.be/${q.videoId}`}
+              title={`${label}: ${q.question}`}
+              start={q.start}
+              facade
+            />
+          </section>
 
-        <section aria-labelledby="long-answer" className="mt-12">
-          <h2 id="long-answer" className="text-2xl font-semibold">
-            {t.longAnswer}
-          </h2>
-          {q.sections.map((s) => (
-            <div key={s.heading} className="mt-8">
-              <h3 className="text-xl font-semibold text-primary">{s.heading}</h3>
-              <ul className="mt-3 flex list-disc flex-col gap-3 ps-5 text-lg leading-relaxed marker:text-copper">
-                {s.points.map((p) => (
-                  <li key={p}>
-                    <RichText text={p} />
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
-        </section>
-
-        <section
-          aria-labelledby="takeaways"
-          className="mt-12 rounded-xl border border-border bg-card p-6"
-        >
-          <h2 id="takeaways" className="text-2xl font-semibold">
-            {t.takeaways}
-          </h2>
-          <ol className="mt-4 flex list-decimal flex-col gap-3 ps-6 text-lg leading-relaxed marker:font-semibold marker:text-copper">
-            {q.takeaways.map((k) => (
-              <li key={k}>{k}</li>
+          <section aria-labelledby="long-answer" className="mt-12">
+            <h2 id="long-answer" className="text-2xl font-semibold">
+              {t.longAnswer}
+            </h2>
+            {q.sections.map((s) => (
+              <div key={s.heading} className="mt-8">
+                <h3 className="text-xl font-semibold text-primary">{s.heading}</h3>
+                <ul className="mt-3 flex list-disc flex-col gap-3 ps-5 text-lg leading-relaxed marker:text-copper">
+                  {s.points.map((p) => (
+                    <li key={p}>
+                      <RichText text={p} />
+                    </li>
+                  ))}
+                </ul>
+              </div>
             ))}
-          </ol>
-        </section>
+          </section>
 
-        <section aria-labelledby="references" className="mt-12">
-          <h2 id="references" className="text-2xl font-semibold">
-            {t.references}
-          </h2>
-
-          {q.books.length ? (
-            <>
-              <h3 className="mt-6 text-lg font-semibold text-primary">{t.books}</h3>
-              <ul className="mt-2 divide-y divide-border border-y border-border">
-                {q.books.map((b) => (
-                  <li key={b.title} className="py-3">
-                    <cite className="text-lg font-semibold not-italic">{b.title}</cite>
-                    {b.author ? <span className="text-muted-foreground"> · {b.author}</span> : null}
-                    {'note' in b && b.note ? (
-                      <span className="mt-0.5 block text-sm text-muted-foreground">{b.note}</span>
-                    ) : null}
-                  </li>
-                ))}
-              </ul>
-            </>
-          ) : null}
-
-          {q.citations.length ? (
-            <>
-              <h3 className="mt-6 text-lg font-semibold text-primary">{t.citations}</h3>
-              <ul className="mt-2 flex flex-col gap-3">
-                {q.citations.map((c) => (
-                  <li key={c.text} className="text-lg leading-relaxed">
-                    {c.text}{' '}
-                    <span className="text-sm whitespace-nowrap text-muted-foreground">
-                      ({c.source})
-                    </span>
-                  </li>
-                ))}
-              </ul>
-            </>
-          ) : null}
-        </section>
-
-        <p className="mt-12 text-sm text-muted-foreground">{t.sourceNote}</p>
-      </article>
-
-      <nav
-        aria-label={t.title}
-        className="mt-12 grid gap-3 border-t border-border pt-8 sm:grid-cols-2"
-      >
-        {prev ? <Neighbour q={prev} direction="prev" /> : <span className="hidden sm:block" />}
-        {next ? (
-          <Neighbour q={next} direction="next" />
-        ) : (
-          <Link
-            to="/questions"
-            className="flex items-center justify-end gap-2 rounded-xl border border-border p-4 font-medium text-primary hover:bg-muted sm:col-start-2"
+          <section
+            aria-labelledby="takeaways"
+            className="mt-12 rounded-xl border border-border bg-card p-6"
           >
-            {t.allQuestions}
-            <HugeiconsIcon icon={ArrowLeft01Icon} className="size-4" aria-hidden />
-          </Link>
-        )}
-      </nav>
+            <h2 id="takeaways" className="text-2xl font-semibold">
+              {t.takeaways}
+            </h2>
+            <ol className="mt-4 flex list-decimal flex-col gap-3 ps-6 text-lg leading-relaxed marker:font-semibold marker:text-copper">
+              {q.takeaways.map((k) => (
+                <li key={k}>{k}</li>
+              ))}
+            </ol>
+          </section>
+
+          <section aria-labelledby="references" className="mt-12">
+            <h2 id="references" className="text-2xl font-semibold">
+              {t.references}
+            </h2>
+
+            {q.books.length ? (
+              <>
+                <h3 className="mt-6 text-lg font-semibold text-primary">{t.books}</h3>
+                <ul className="mt-2 divide-y divide-border border-y border-border">
+                  {q.books.map((b) => (
+                    <li key={b.title} className="py-3">
+                      <cite className="text-lg font-semibold not-italic">{b.title}</cite>
+                      {b.author ? (
+                        <span className="text-muted-foreground"> · {b.author}</span>
+                      ) : null}
+                      {'note' in b && b.note ? (
+                        <span className="mt-0.5 block text-sm text-muted-foreground">{b.note}</span>
+                      ) : null}
+                    </li>
+                  ))}
+                </ul>
+              </>
+            ) : null}
+
+            {q.citations.length ? (
+              <>
+                <h3 className="mt-6 text-lg font-semibold text-primary">{t.citations}</h3>
+                <ul className="mt-2 flex flex-col gap-3">
+                  {q.citations.map((c) => (
+                    <li key={c.text} className="text-lg leading-relaxed">
+                      {c.text}{' '}
+                      <span className="text-sm whitespace-nowrap text-muted-foreground">
+                        ({c.source})
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              </>
+            ) : null}
+          </section>
+
+          <p className="mt-12 text-sm text-muted-foreground">{t.sourceNote}</p>
+        </article>
+
+        <nav
+          aria-label={t.title}
+          className="mt-12 grid gap-3 border-t border-border pt-8 sm:grid-cols-2"
+        >
+          {prev ? <Neighbour q={prev} direction="prev" /> : <span className="hidden sm:block" />}
+          {next ? (
+            <Neighbour q={next} direction="next" />
+          ) : (
+            <Link
+              to="/questions"
+              className="flex items-center justify-end gap-2 rounded-xl border border-border p-4 font-medium text-primary hover:bg-muted sm:col-start-2"
+            >
+              {t.allQuestions}
+              <HugeiconsIcon icon={ArrowLeft01Icon} className="size-4" aria-hidden />
+            </Link>
+          )}
+        </nav>
+      </div>
     </div>
   )
 }

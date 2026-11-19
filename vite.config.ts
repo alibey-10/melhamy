@@ -55,21 +55,27 @@ const config = defineConfig({
     options: { typeAware: true, typeCheck: true },
   },
   resolve: { tsconfigPaths: true },
-  plugins: lazyPlugins(() => [
-    devtools(),
-    cloudflare({ viteEnvironment: { name: 'ssr' } }),
-    tailwindcss(),
-    viteStaticCopy({
-      targets: ['cmaps', 'standard_fonts', 'wasm', 'iccs'].map((dir) => ({
-        src: `${pdfjsDir}/${dir}/*`,
-        dest: `pdfjs/${dir}`,
-        rename: { stripBase: true },
-      })),
-    }),
-    tanstackStart(),
-    viteReact(),
-    babel({ presets: [reactCompilerPreset()] }),
-  ]),
+  // The app's plugins, Cloudflare's dev runner above all, fail to start under Vitest, and
+  // the unit tests don't need them.
+  plugins: lazyPlugins(() =>
+    process.env.VITEST
+      ? []
+      : [
+          devtools(),
+          cloudflare({ viteEnvironment: { name: 'ssr' } }),
+          tailwindcss(),
+          viteStaticCopy({
+            targets: ['cmaps', 'standard_fonts', 'wasm', 'iccs'].map((dir) => ({
+              src: `${pdfjsDir}/${dir}/*`,
+              dest: `pdfjs/${dir}`,
+              rename: { stripBase: true },
+            })),
+          }),
+          tanstackStart(),
+          viteReact(),
+          babel({ presets: [reactCompilerPreset()] }),
+        ],
+  ),
 })
 
 export default config
