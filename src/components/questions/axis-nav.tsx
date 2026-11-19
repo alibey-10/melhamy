@@ -107,26 +107,15 @@ function AxisList({
       {AXES.map((axis) => {
         const isActive = axis.number === active
         const body = (
-          <>
-            <span
-              aria-hidden
-              className={cn(
-                'w-6 shrink-0 font-heading text-lg leading-snug font-semibold tabular-nums',
-                writtenAxes.has(axis.number) ? 'text-copper' : 'text-muted-foreground',
-              )}
-            >
-              {axis.number}
+          <span className="flex min-w-0 flex-col">
+            <span className="sr-only">{fill(t.axisLabel, { number: axis.number })}: </span>
+            <span className="leading-snug">{axis.name}</span>
+            <span className="text-sm text-muted-foreground">
+              {writtenAxes.has(axis.number)
+                ? fill(t.axisRange, { first: axis.first, last: axis.last })
+                : t.axisComingSoon}
             </span>
-            <span className="flex min-w-0 flex-col">
-              <span className="sr-only">{fill(t.axisLabel, { number: axis.number })}: </span>
-              <span className="leading-snug">{axis.name}</span>
-              <span className="text-sm text-muted-foreground">
-                {writtenAxes.has(axis.number)
-                  ? fill(t.axisRange, { first: axis.first, last: axis.last })
-                  : t.axisComingSoon}
-              </span>
-            </span>
-          </>
+          </span>
         )
 
         if (!writtenAxes.has(axis.number)) {
@@ -173,7 +162,7 @@ function AxisList({
 
 function AxisQuestions({ axis, onNavigate }: { axis: number; onNavigate?: () => void }) {
   return (
-    <ol className="mt-1 mb-2 flex flex-col gap-0.5 ps-8">
+    <ol className="mt-1 mb-2 flex flex-col gap-0.5 ps-3">
       {QUESTIONS.filter((q) => axisOf(q.number) === axis).map((q) => (
         <li key={q.number}>
           <Link
