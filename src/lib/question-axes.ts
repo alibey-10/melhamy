@@ -1,8 +1,8 @@
 /**
  * The series' ten axes, ten questions each, in order. Axis `n` holds questions
  * `(n - 1) * 10 + 1` to `n * 10`. Each name must match the `axis` field of that axis's
- * question files. The names of axes 8–10 come only from the host's overview in episode 1
- * and may change once their episodes are written up.
+ * question files. Axis 10's name is the one the host gives when closing axis 9 (episode 59);
+ * confirm it again once its episodes are written up.
  */
 export const AXIS_NAMES = [
   'مدخل إلى علم التاريخ',
@@ -13,7 +13,7 @@ export const AXIS_NAMES = [
   'الدولة العباسية',
   'الدول المستقلة',
   'الدولة العثمانية',
-  'حقبة الاستعمار',
+  'الاستعمار الأجنبي',
   'التاريخ المعاصر',
 ] as const
 
