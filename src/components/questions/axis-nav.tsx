@@ -1,6 +1,7 @@
 import * as React from 'react'
 import { Link } from '@tanstack/react-router'
 import { cn } from 'cn'
+import { AnimatePresence, motion, useReducedMotion } from 'motion/react'
 import { HugeiconsIcon } from '@hugeicons/react'
 import { ArrowDown01Icon } from '@hugeicons/core-free-icons'
 import {
@@ -13,18 +14,19 @@ import {
 
 import { content } from '@/content'
 import { fill } from '@/lib/format'
-import { AXES, axisAnchor, axisOf } from '@/lib/question-axes'
+import { AXES, axisAnchor, axisOf, firstQuestionByAxis } from '@/lib/question-axes'
 import { QUESTIONS } from '@/lib/podcast-questions'
 
 const t = content.questions
 
-const writtenAxes = new Set(QUESTIONS.map((q) => axisOf(q.number)))
+const firstQuestions = firstQuestionByAxis(QUESTIONS)
+const AXIS_EASE = [0.16, 1, 0.3, 1] as const
 
 /**
  * The ten axes: a sticky sidebar on wide screens, a bottom sheet opened from a bar under
  * the header on narrow ones. On a question page, pass `question`: its axis is highlighted
- * and lists its questions. With `spy`, the highlight follows the axis section being read
- * on the `/questions` page instead.
+ * and lists its questions, and clicking an axis opens its first question. With `spy`, the
+ * highlight follows the axis section being read on the `/questions` page instead.
  */
 export function AxisNav({ question, spy = false }: { question?: number; spy?: boolean }) {
   const spied = useVisibleAxis(spy)
@@ -102,23 +104,26 @@ function AxisList({
   onListPage: boolean
   onNavigate?: () => void
 }) {
+  const reduceMotion = useReducedMotion() ?? false
+
   return (
     <ol className="flex flex-col gap-0.5">
       {AXES.map((axis) => {
         const isActive = axis.number === active
+        const firstQuestion = firstQuestions.get(axis.number)
         const body = (
           <span className="flex min-w-0 flex-col">
             <span className="sr-only">{fill(t.axisLabel, { number: axis.number })}: </span>
             <span className="leading-snug">{axis.name}</span>
             <span className="text-sm text-muted-foreground">
-              {writtenAxes.has(axis.number)
+              {firstQuestion !== undefined
                 ? fill(t.axisRange, { first: axis.first, last: axis.last })
                 : t.axisComingSoon}
             </span>
           </span>
         )
 
-        if (!writtenAxes.has(axis.number)) {
+        if (firstQuestion === undefined) {
           return (
             <li key={axis.number} className="flex gap-2 rounded-lg px-3 py-2 text-muted-foreground">
               {body}
@@ -130,7 +135,7 @@ function AxisList({
           'aria-current': isActive ? ('location' as const) : undefined,
           onClick: onNavigate,
           className: cn(
-            'flex gap-2 rounded-lg px-3 py-2 outline-none hover:bg-muted focus-visible:ring-3 focus-visible:ring-ring/50',
+            'flex gap-2 rounded-lg px-3 py-2 transition-colors duration-200 outline-none hover:bg-muted focus-visible:ring-3 focus-visible:ring-ring/50',
             isActive && 'bg-primary/8 font-semibold text-primary',
           ),
           children: body,
@@ -143,15 +148,34 @@ function AxisList({
             {onListPage ? (
               <a href={`#${axisAnchor(axis.number)}`} {...props} />
             ) : (
-              <Link
-                to="/questions"
-                hash={axisAnchor(axis.number)}
-                activeOptions={{ exact: true }}
-                {...props}
-              />
+              <Link to="/questions/$number" params={{ number: String(firstQuestion) }} {...props} />
             )}
-            {isActive && showQuestions ? (
-              <AxisQuestions axis={axis.number} onNavigate={onNavigate} />
+            {showQuestions ? (
+              <AnimatePresence initial={false}>
+                {isActive ? (
+                  <motion.div
+                    key="questions"
+                    initial={reduceMotion ? false : { height: 0, opacity: 0 }}
+                    animate={{ height: 'auto', opacity: 1 }}
+                    exit={reduceMotion ? { opacity: 0 } : { height: 0, opacity: 0 }}
+                    transition={
+                      reduceMotion
+                        ? { duration: 0 }
+                        : {
+                            height: { duration: 0.26, ease: AXIS_EASE },
+                            opacity: { duration: 0.2, ease: 'easeOut' },
+                          }
+                    }
+                    className="overflow-hidden"
+                  >
+                    <AxisQuestions
+                      axis={axis.number}
+                      onNavigate={onNavigate}
+                      reduceMotion={reduceMotion}
+                    />
+                  </motion.div>
+                ) : null}
+              </AnimatePresence>
             ) : null}
           </li>
         )
@@ -160,16 +184,33 @@ function AxisList({
   )
 }
 
-function AxisQuestions({ axis, onNavigate }: { axis: number; onNavigate?: () => void }) {
+function AxisQuestions({
+  axis,
+  onNavigate,
+  reduceMotion,
+}: {
+  axis: number
+  onNavigate?: () => void
+  reduceMotion: boolean
+}) {
   return (
-    <ol className="mt-1 mb-2 flex flex-col gap-0.5 ps-3">
-      {QUESTIONS.filter((q) => axisOf(q.number) === axis).map((q) => (
-        <li key={q.number}>
+    <ol className="flex flex-col gap-0.5 pt-1 pe-1 pb-2 ps-3">
+      {QUESTIONS.filter((q) => axisOf(q.number) === axis).map((q, index) => (
+        <motion.li
+          key={q.number}
+          initial={reduceMotion ? false : { opacity: 0, y: -4 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={
+            reduceMotion
+              ? { duration: 0 }
+              : { duration: 0.2, delay: index * 0.018, ease: AXIS_EASE }
+          }
+        >
           <Link
             to="/questions/$number"
             params={{ number: String(q.number) }}
             onClick={onNavigate}
-            className="flex gap-2 rounded-lg px-2 py-1.5 text-sm leading-snug text-muted-foreground outline-none hover:bg-muted hover:text-foreground focus-visible:ring-3 focus-visible:ring-ring/50 data-[status=active]:bg-muted data-[status=active]:font-semibold data-[status=active]:text-foreground"
+            className="flex gap-2 rounded-lg px-2 py-1.5 text-sm leading-snug text-muted-foreground transition-colors duration-150 outline-none hover:bg-muted hover:text-foreground focus-visible:ring-3 focus-visible:ring-ring/50 data-[status=active]:bg-muted data-[status=active]:font-semibold data-[status=active]:text-foreground"
           >
             <span aria-hidden className="w-5 shrink-0 text-copper tabular-nums">
               {q.number}
@@ -179,7 +220,7 @@ function AxisQuestions({ axis, onNavigate }: { axis: number; onNavigate?: () => 
               {q.question}
             </span>
           </Link>
-        </li>
+        </motion.li>
       ))}
     </ol>
   )
