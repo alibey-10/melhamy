@@ -37,3 +37,14 @@ export function axisOf(questionNumber: number) {
 export function axisAnchor(axisNumber: number) {
   return `axis-${axisNumber}`
 }
+
+/** The lowest-numbered question in `questions` for each axis that has one. */
+export function firstQuestionByAxis(questions: readonly { number: number }[]) {
+  const first = new Map<number, number>()
+  for (const q of questions) {
+    const axis = axisOf(q.number)
+    const current = first.get(axis)
+    if (current === undefined || q.number < current) first.set(axis, q.number)
+  }
+  return first
+}
