@@ -3,6 +3,7 @@ import { cn } from 'cn'
 
 import { Button } from '@/components/ui/button'
 import { YouTubeEmbed } from '@/components/youtube-embed'
+import { YouTubeThumbnail } from '@/components/youtube-thumbnail'
 import { content } from '@/content'
 import podcast from '@/content/podcast.json'
 import { fill, formatCompact, formatDuration } from '@/lib/format'
@@ -96,12 +97,12 @@ export function EpisodeBrowser() {
                         : 'group-hover:ring-2 group-hover:ring-copper/60',
                     )}
                   >
-                    <img
-                      src={`https://i.ytimg.com/vi/${e.id}/mqdefault.jpg`}
+                    <YouTubeThumbnail
+                      videoId={e.id}
                       alt=""
-                      width={320}
-                      height={180}
+                      quality="sd"
                       loading="lazy"
+                      decoding="async"
                       className="size-full object-cover transition-transform duration-300 group-hover:scale-105"
                     />
                     <span className="absolute top-2 start-2 rounded bg-foreground px-1.5 text-sm font-semibold text-background tabular-nums">

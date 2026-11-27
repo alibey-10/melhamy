@@ -7,6 +7,9 @@ import {
   YoutubeIcon,
 } from '@hugeicons/core-free-icons'
 
+import { FeaturedCarousel } from '@/components/videos/featured-carousel'
+import { pickFeaturedEpisodes } from '@/components/videos/featured-episodes'
+import { YouTubeThumbnail } from '@/components/youtube-thumbnail'
 import { NAV_URLS, SOCIAL_URLS } from '@/constants/urls'
 import { content } from '@/content'
 import playlists from '@/content/playlists.json'
@@ -15,11 +18,11 @@ import { fill } from '@/lib/format'
 import { breadcrumbLd, seo } from '@/lib/seo'
 
 const t = content.videos
+const featuredEpisodes = pickFeaturedEpisodes(podcast.episodes)
 
 type Playlist = (typeof playlists.playlists)[number]
 
 const playlistUrl = (id: string) => `https://www.youtube.com/playlist?list=${id}`
-const thumbnail = (videoId: string) => `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`
 
 export const Route = createFileRoute('/videos/')({
   head: () =>
@@ -73,17 +76,11 @@ function VideosPage() {
 /** «100 سؤال في التاريخ» leads to its pages on the site rather than to YouTube: the series overview, or the written questions. */
 function FeaturedSeries() {
   return (
-    <article className="group relative mt-10 grid overflow-hidden rounded-xl border border-border bg-card transition-colors hover:border-copper/60 md:grid-cols-[minmax(0,1.25fr)_minmax(0,1fr)]">
-      <div className="relative aspect-video overflow-hidden bg-muted">
-        <img
-          src={thumbnail(podcast.episodes[0].id)}
-          alt=""
-          width={480}
-          height={360}
-          className="size-full object-cover transition-transform duration-300 group-hover:scale-[1.03]"
-        />
-        <Count>{fill(t.episodes, { count: podcast.totals.episodes })}</Count>
-      </div>
+    <article className="group relative mt-10 grid overflow-hidden rounded-xl border border-border bg-card transition-colors hover:border-copper/60 lg:grid-cols-[minmax(0,1.7fr)_minmax(0,1fr)]">
+      <FeaturedCarousel
+        episodes={featuredEpisodes}
+        badgeText={fill(t.episodes, { count: podcast.totals.episodes })}
+      />
       <div className="flex flex-col gap-2 p-5 sm:p-6">
         <p className="text-sm font-semibold text-copper">{t.featuredLabel}</p>
         <h2 className="text-2xl font-semibold group-hover:text-primary sm:text-3xl">
@@ -97,7 +94,7 @@ function FeaturedSeries() {
         <p className="text-lg leading-relaxed text-pretty text-muted-foreground">
           {fill(t.featuredText, { count: podcast.totals.episodes })}
         </p>
-        <div className="relative mt-auto flex flex-wrap gap-3 pt-2">
+        <div className="relative z-10 mt-auto flex flex-wrap gap-3 pt-2">
           <Link
             to="/questions"
             className="inline-flex items-center gap-2 rounded-lg bg-primary px-5 py-2.5 font-medium text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:ring-3 focus-visible:ring-ring/50 focus-visible:outline-none"
@@ -135,12 +132,11 @@ function PlaylistCard({ playlist: p }: { playlist: Playlist }) {
         <span aria-hidden className="absolute inset-x-5 top-0 h-3 rounded-t-lg bg-border/60" />
         <span aria-hidden className="absolute inset-x-2.5 top-1 h-3 rounded-t-lg bg-border" />
         <div className="relative aspect-video overflow-hidden rounded-lg bg-muted ring-offset-2 ring-offset-background transition-shadow group-hover:ring-2 group-hover:ring-copper/60">
-          <img
-            src={thumbnail(p.thumbnail)}
+          <YouTubeThumbnail
+            videoId={p.thumbnail}
             alt=""
-            width={480}
-            height={360}
             loading="lazy"
+            decoding="async"
             className="size-full object-cover transition-transform duration-300 group-hover:scale-105"
           />
           <Count>{count}</Count>
