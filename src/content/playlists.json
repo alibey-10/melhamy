@@ -1,0 +1,120 @@
+{
+  "fetchedAt": "2026-11-27",
+  "playlists": [
+    {
+      "title": "السيرة النبوية",
+      "description": "قراءة في سيرة النبي ﷺ تقف عند دروسها السياسية والدعوية، من نسبه ومولده إلى صلح الحديبية.",
+      "thumbnail": "LqC-34MRMs8",
+      "seasons": [
+        {
+          "id": "PLnpknmCXt_N5X7DKYKcYk5EkyW0-wmyJ0",
+          "videos": 108
+        }
+      ]
+    },
+    {
+      "title": "غزوات النبي",
+      "description": "التاريخ العسكري للدولة الإسلامية.",
+      "thumbnail": "3eCaSRRlm80",
+      "seasons": [
+        {
+          "id": "PLnpknmCXt_N5ZMMiT7EUvDg6m1mwXFIUy",
+          "videos": 31
+        }
+      ]
+    },
+    {
+      "title": "ويبقى الأثر",
+      "description": "قراءات في مذكرات العلماء والقادة والساسة ورحلات الرحالة، من ابن خلدون والغزالي إلى كيسنجر وجولدا مائير.",
+      "thumbnail": "bKSpVUK4mv4",
+      "seasons": [
+        {
+          "id": "PLnpknmCXt_N6zJQ3lQX1LhSoQbomBqxvX",
+          "videos": 15
+        },
+        {
+          "id": "PLnpknmCXt_N40ZJwz0Kmb2f1k297R-XWZ",
+          "videos": 15
+        },
+        {
+          "id": "PLnpknmCXt_N7NoQjIZ3Cv0UjR2dbAccRn",
+          "videos": 31
+        },
+        {
+          "id": "PLnpknmCXt_N4PXlRWakGIicZGSc_tQADr",
+          "videos": 16
+        },
+        {
+          "id": "PLnpknmCXt_N79fXw2LXigJ8lz7gFBWGCZ",
+          "videos": 15
+        }
+      ]
+    },
+    {
+      "title": "طبائع الحكم مع ابن خلدون",
+      "description": "سنن قيام الدول وسقوطها كما رصدها ابن خلدون في مقدمته: الغلبة والعصبية، والترف والظلم، وشيخوخة الدولة.",
+      "thumbnail": "XmH3VqOYJ_o",
+      "seasons": [
+        {
+          "id": "PLnpknmCXt_N4dlNIqnLknHrdbVMe3wRI3",
+          "videos": 24
+        }
+      ]
+    },
+    {
+      "title": "قصة الفتنة الكبرى",
+      "description": "ما جرى بين الصحابة من مقتل عثمان إلى استشهاد علي، بموقعتي الجمل وصفين وقصة التحكيم، وكيف تكوّنت عقيدة أهل السنة في الصحابة.",
+      "thumbnail": "38Qx2PHhFGw",
+      "seasons": [
+        {
+          "id": "PLnpknmCXt_N6RjzQ5jvwO424All21iCjX",
+          "videos": 31
+        }
+      ]
+    },
+    {
+      "title": "قصة فلسطين",
+      "description": "قصة فلسطين من جذورها والمقاومة العثمانية للمشروع الصهيوني، مرورًا بالاحتلال الإنجليزي والنكبة والنكسة، إلى تحرير غزة وحصارها.",
+      "thumbnail": "Dk1w-C0sLGE",
+      "seasons": [
+        {
+          "id": "PLnpknmCXt_N5X0DDH4sEaD8iIGLSalWbW",
+          "videos": 30
+        }
+      ]
+    },
+    {
+      "title": "في أروقة التاريخ",
+      "description": "محطات فاصلة في التاريخ الإسلامي: من الغزوات وحروب الردة وفتوح فارس، إلى فتح القسطنطينية وسقوط بغداد والأندلس، وعجائب الحضارة الإسلامية.",
+      "thumbnail": "fubnbaLYkrw",
+      "seasons": [
+        {
+          "id": "PLnpknmCXt_N7mda0iWQ7NJ8DacTAJnAdz",
+          "videos": 26
+        }
+      ]
+    },
+    {
+      "title": "لقاءات البودكاست",
+      "description": "حوارات محمد إلهامي في برامج البودكاست: سيناء في الاستراتيجية الإسرائيلية، وتاريخ مصر والتيار الإسلامي، ودمشق وبيت المقدس، ودروس التاريخ لواقعنا.",
+      "thumbnail": "-YFs6rpLM8U",
+      "seasons": [
+        {
+          "id": "PLnpknmCXt_N7lzPahW4VdBp_LFrxIBgil",
+          "videos": 23
+        }
+      ]
+    },
+    {
+      "title": "وَأَلَّفَ بَيْنَ قُلُوبِهِمْ",
+      "description": "كيف يُبنى التماسك الاجتماعي بالإسلام: صلاة المسجد وصلة الرحم وحق الجار وعمل الخير والأوقاف ومكانة العلماء، وصولًا إلى النظام السياسي الإسلامي.",
+      "thumbnail": "FKmPOoDu2O0",
+      "seasons": [
+        {
+          "id": "PLnpknmCXt_N60KdQR2Xdb9mGlfDRuwWRB",
+          "videos": 11
+        }
+      ]
+    }
+  ]
+}

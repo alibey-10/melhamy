@@ -69,7 +69,7 @@ export function YouTubeEmbed({
         <button
           type="button"
           onClick={() => setClicked(true)}
-          aria-label={fill(content.videos.playVideo, { title })}
+          aria-label={fill(content.podcast.playVideo, { title })}
           className="group relative block size-full"
         >
           <img

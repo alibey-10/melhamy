@@ -5,7 +5,7 @@ import { content } from '@/content'
 import comments from '@/content/podcast-comments.json'
 import { fill } from '@/lib/format'
 
-const t = content.videos
+const t = content.podcast
 
 /** Hand-picked, highly liked YouTube comments, each linking to the comment on its episode. */
 export function PodcastComments() {

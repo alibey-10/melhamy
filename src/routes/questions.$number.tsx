@@ -14,7 +14,7 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from '@/components/ui/breadcrumb'
-import { NAV_URLS, questionPath } from '@/constants/urls'
+import { NAV_URLS, QUESTIONS_LIST_URL, questionPath } from '@/constants/urls'
 import { content } from '@/content'
 import { fill } from '@/lib/format'
 import { axisAnchor, axisOf } from '@/lib/question-axes'
@@ -69,6 +69,7 @@ function questionSeo(q: Question) {
       breadcrumbLd([
         [content.breadcrumb.home, '/'],
         [t.title, NAV_URLS.questions],
+        [t.listTitle, QUESTIONS_LIST_URL],
         [label, path],
       ]),
     ],
@@ -95,6 +96,10 @@ function QuestionPage() {
             </BreadcrumbItem>
             <BreadcrumbSeparator />
             <BreadcrumbItem>
+              <BreadcrumbLink render={<Link to="/questions/list" />}>{t.listTitle}</BreadcrumbLink>
+            </BreadcrumbItem>
+            <BreadcrumbSeparator />
+            <BreadcrumbItem>
               <BreadcrumbPage>{label}</BreadcrumbPage>
             </BreadcrumbItem>
           </BreadcrumbList>
@@ -106,7 +111,7 @@ function QuestionPage() {
               <span className="font-semibold text-copper">{label}</span>
               <span aria-hidden>·</span>
               <Link
-                to="/questions"
+                to="/questions/list"
                 hash={axisAnchor(axis)}
                 className="hover:text-primary hover:underline"
               >
@@ -222,7 +227,7 @@ function QuestionPage() {
             <Neighbour q={next} direction="next" />
           ) : (
             <Link
-              to="/questions"
+              to="/questions/list"
               className="flex items-center justify-end gap-2 rounded-xl border border-border p-4 font-medium text-primary hover:bg-muted sm:col-start-2"
             >
               {t.allQuestions}
