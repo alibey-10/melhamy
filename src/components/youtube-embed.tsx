@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { HugeiconsIcon } from '@hugeicons/react'
 import { PlayIcon } from '@hugeicons/core-free-icons'
 
+import { YouTubeThumbnail } from '@/components/youtube-thumbnail'
 import { content } from '@/content'
 import { fill } from '@/lib/format'
 
@@ -72,12 +73,11 @@ export function YouTubeEmbed({
           aria-label={fill(content.podcast.playVideo, { title })}
           className="group relative block size-full"
         >
-          <img
-            src={`https://i.ytimg.com/vi/${id}/hqdefault.jpg`}
+          <YouTubeThumbnail
+            videoId={id}
             alt=""
-            width={480}
-            height={360}
             loading="lazy"
+            decoding="async"
             className="size-full object-cover"
           />
           <span className="absolute inset-0 m-auto flex size-16 items-center justify-center rounded-full bg-black/70 text-white transition-colors group-hover:bg-primary">

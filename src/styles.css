@@ -186,3 +186,11 @@
 .js [data-count-up]:not([data-ready]) {
   visibility: hidden;
 }
+
+[data-slot='carousel-viewport'] {
+  scrollbar-width: none;
+}
+
+[data-slot='carousel-viewport']::-webkit-scrollbar {
+  display: none;
+}
