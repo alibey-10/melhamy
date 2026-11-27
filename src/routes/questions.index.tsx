@@ -30,7 +30,7 @@ export const Route = createFileRoute('/questions/')({
   component: SeriesPage,
 })
 
-/** The series overview: its numbers, a way into the written questions, the episodes and viewers' comments. */
+/** The series overview: its numbers, viewers' comments, a way into the written questions, and the episodes. */
 function SeriesPage() {
   useRedirectAxisLinks()
 
@@ -53,9 +53,9 @@ function SeriesPage() {
       </header>
 
       <PodcastStats />
+      <PodcastComments />
       <WrittenQuestions />
       <EpisodeBrowser />
-      <PodcastComments />
     </div>
   )
 }
@@ -64,7 +64,7 @@ function WrittenQuestions() {
   return (
     <section
       aria-labelledby="written-title"
-      className="mt-10 flex flex-col gap-5 rounded-xl border border-border border-s-primary border-s-3 bg-card p-5 sm:flex-row sm:items-center sm:p-6"
+      className="mt-16 flex flex-col gap-5 rounded-xl border border-border border-b-3 border-b-primary bg-card p-5 sm:flex-row sm:items-center sm:p-6"
     >
       <div className="min-w-0 flex-1">
         <h2 id="written-title" className="text-xl font-semibold sm:text-2xl">
