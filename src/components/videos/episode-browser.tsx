@@ -7,7 +7,7 @@ import { content } from '@/content'
 import podcast from '@/content/podcast.json'
 import { fill, formatCompact, formatDuration } from '@/lib/format'
 
-const t = content.videos
+const t = content.podcast
 
 type Episode = (typeof podcast.episodes)[number]
 type Sort = 'order' | 'views'

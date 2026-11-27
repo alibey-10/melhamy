@@ -26,7 +26,7 @@ const AXIS_EASE = [0.16, 1, 0.3, 1] as const
  * The ten axes: a sticky sidebar on wide screens, a bottom sheet opened from a bar under
  * the header on narrow ones. On a question page, pass `question`: its axis is highlighted
  * and lists its questions, and clicking an axis opens its first question. With `spy`, the
- * highlight follows the axis section being read on the `/questions` page instead.
+ * highlight follows the axis section being read on the `/questions/list` page instead.
  */
 export function AxisNav({ question, spy = false }: { question?: number; spy?: boolean }) {
   const spied = useVisibleAxis(spy)
@@ -226,7 +226,7 @@ function AxisQuestions({
   )
 }
 
-/** The axis whose section is nearest the top of the screen on the `/questions` page. */
+/** The axis whose section is nearest the top of the screen on the `/questions/list` page. */
 function useVisibleAxis(enabled: boolean) {
   const [axis, setAxis] = React.useState<number | undefined>(enabled ? 1 : undefined)
 

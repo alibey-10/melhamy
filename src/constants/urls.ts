@@ -22,6 +22,9 @@ export const NAV_URLS = {
   about: '/about',
 } as const
 
+/** The written-up podcast questions, listed by axis. `NAV_URLS.questions` is the series overview. */
+export const QUESTIONS_LIST_URL = `${NAV_URLS.questions}/list`
+
 /** One podcast question's page. */
 export function questionPath(number: number) {
   return `${NAV_URLS.questions}/${number}`

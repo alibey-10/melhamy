@@ -3,7 +3,7 @@ import { content } from '@/content'
 import podcast from '@/content/podcast.json'
 import { fill, formatCompact, formatDate } from '@/lib/format'
 
-const t = content.videos
+const t = content.podcast
 const { totals } = podcast
 
 const plain = (n: number) => String(Math.round(n))

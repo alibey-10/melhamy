@@ -33,7 +33,7 @@ export function axisOf(questionNumber: number) {
   return Math.ceil(questionNumber / QUESTIONS_PER_AXIS)
 }
 
-/** The id of an axis's section on the `/questions` page. */
+/** The id of an axis's section on the `/questions/list` page. */
 export function axisAnchor(axisNumber: number) {
   return `axis-${axisNumber}`
 }
