@@ -18,7 +18,7 @@ export function PodcastComments() {
         {comments.map((c) => (
           <figure
             key={c.id}
-            className="mb-4 break-inside-avoid rounded-xl border border-border border-s-copper/60 border-s-2 bg-card p-5"
+            className="mb-4 break-inside-avoid rounded-xl border border-border border-b-2 border-b-copper/60 bg-card p-5"
           >
             <blockquote className="text-lg leading-relaxed">{c.text}</blockquote>
             <figcaption className="mt-4 flex items-center justify-between gap-3 text-sm text-muted-foreground">
