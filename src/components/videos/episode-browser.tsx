@@ -12,9 +12,6 @@ const t = content.podcast
 type Episode = (typeof podcast.episodes)[number]
 type Sort = 'order' | 'views'
 
-/** The id of the player, so links can jump straight to the episodes. */
-export const EPISODES_ANCHOR = 'episodes'
-
 /** Episodes revealed per "show more". */
 const PAGE = 12
 
@@ -43,12 +40,7 @@ export function EpisodeBrowser() {
 
   return (
     <>
-      <section
-        id={EPISODES_ANCHOR}
-        aria-labelledby="player-title"
-        className="mt-16 scroll-mt-24"
-        ref={playerRef}
-      >
+      <section aria-labelledby="player-title" className="mt-16 scroll-mt-24" ref={playerRef}>
         <YouTubeEmbed
           key={current.id}
           url={`https://youtu.be/${current.id}`}

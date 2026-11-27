@@ -11,7 +11,6 @@ import { NAV_URLS, SOCIAL_URLS } from '@/constants/urls'
 import { content } from '@/content'
 import playlists from '@/content/playlists.json'
 import podcast from '@/content/podcast.json'
-import { EPISODES_ANCHOR } from '@/components/videos/episode-browser'
 import { fill } from '@/lib/format'
 import { breadcrumbLd, seo } from '@/lib/seo'
 
@@ -71,7 +70,7 @@ function VideosPage() {
   )
 }
 
-/** «100 سؤال في التاريخ» leads to its pages on the site rather than to YouTube: the episodes, or the written questions. */
+/** «100 سؤال في التاريخ» leads to its pages on the site rather than to YouTube: the series overview, or the written questions. */
 function FeaturedSeries() {
   return (
     <article className="group relative mt-10 grid overflow-hidden rounded-xl border border-border bg-card transition-colors hover:border-copper/60 md:grid-cols-[minmax(0,1.25fr)_minmax(0,1fr)]">
@@ -101,7 +100,6 @@ function FeaturedSeries() {
         <div className="relative mt-auto flex flex-wrap gap-3 pt-2">
           <Link
             to="/questions"
-            hash={EPISODES_ANCHOR}
             className="inline-flex items-center gap-2 rounded-lg bg-primary px-5 py-2.5 font-medium text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:ring-3 focus-visible:ring-ring/50 focus-visible:outline-none"
           >
             <HugeiconsIcon icon={PlayIcon} className="size-4" aria-hidden />
